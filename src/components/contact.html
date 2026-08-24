@@ -1,0 +1,42 @@
+<section id="contact" class="section contact-section">
+    <div class="container">
+        <h2 class="section-title">Let's Create Something <span class="gradient-text">Amazing</span></h2>
+        <p class="section-intro">Have an idea, project, or just want to connect? I'd love to hear from you.</p>
+        <div class="contact-content">
+            <div class="contact-left">
+                <div class="contact-info-card">
+                    <h3 class="contact-card-title">Get in Touch</h3>
+                    <div class="contact-info">
+                        <div class="info-item"><div class="info-icon-wrapper"><i class="fas fa-envelope"></i></div><div class="info-content"><span class="info-label">Email</span><span class="info-value">pereznicholetricia@gmail.com</span></div></div>
+                        <div class="info-item"><div class="info-icon-wrapper"><i class="fas fa-phone"></i></div><div class="info-content"><span class="info-label">Phone</span><span class="info-value">+63 XXX XXX XXXX</span></div></div>
+                        <div class="info-item"><div class="info-icon-wrapper"><i class="fab fa-facebook"></i></div><div class="info-content"><span class="info-label">Facebook</span><span class="info-value">Your Facebook Profile</span></div></div>
+                    </div>
+                </div>
+                <div class="social-icons">
+                    <a href="#" class="social-icon" target="_blank" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                    <a href="#" class="social-icon" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                    <a href="#" class="social-icon" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+            <div class="contact-right">
+                <form id="contactForm" class="contact-form">
+                    <h3 class="contact-form-title">Send a Message</h3>
+                    <div class="form-group"><div class="input-wrapper"><i class="fas fa-user input-icon"></i><input type="text" id="fullName" name="fullName" placeholder="Full Name" required></div><span class="error-message" id="fullNameError"></span></div>
+                    <div class="form-group"><div class="input-wrapper"><i class="fas fa-envelope input-icon"></i><input type="email" id="email" name="email" placeholder="Your Email" required></div><span class="error-message" id="emailError"></span></div>
+                    <div class="form-group"><div class="input-wrapper"><i class="fas fa-tag input-icon"></i><input type="text" id="subject" name="subject" placeholder="Subject (optional)"></div><span class="error-message" id="subjectError"></span></div>
+                    <div class="form-group"><div class="input-wrapper textarea-wrapper"><i class="fas fa-comment input-icon textarea-icon"></i><textarea id="message" name="message" rows="6" placeholder="Your Message" required></textarea></div><span class="error-message" id="messageError"></span></div>
+                    <button type="submit" class="btn btn-gradient form-submit-btn"><i class="fas fa-paper-plane"></i><span>Send Message</span></button>
+                    <div class="form-message" id="formMessage"></div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+<div class="confirmation-modal" id="confirmationModal">
+    <div class="confirmation-content">
+        <div class="confirmation-icon"><i class="fas fa-check-circle"></i></div>
+        <h3>Message Sent Successfully!</h3>
+        <p>Thank you for reaching out. I'll get back to you as soon as possible.</p>
+        <button class="btn btn-gradient" id="closeConfirmation">Got it!</button>
+    </div>
+</div>

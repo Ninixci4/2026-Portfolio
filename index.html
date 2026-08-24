@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nicia - Portfolio</title>
+    <link rel="stylesheet" href="src/styles/style.css">
+    <link rel="stylesheet" href="src/styles/sections/home.css">
+    <link rel="stylesheet" href="src/styles/sections/about.css">
+    <link rel="stylesheet" href="src/styles/sections/works.css">
+    <link rel="stylesheet" href="src/styles/sections/experience.css">
+    <link rel="stylesheet" href="src/styles/sections/certifications.css">
+    <link rel="stylesheet" href="src/styles/sections/contact.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore-compat.js"></script>
+    <script src="src/scripts/inquiry-service.js"></script>
+</head>
+<body>
+    <!-- Theme Toggle Button -->
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+        <i class="fas fa-moon" id="themeIcon"></i>
+    </button>
+
+    <!-- Header Navigation -->
+    <header class="header">
+        <nav class="navbar">
+            <div class="nav-container">
+                <a href="#home" class="logo">&lt;Nicia.dev&gt;</a>
+                <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation" aria-expanded="false" aria-controls="navLinks">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                <div class="nav-links" id="navLinks">
+                    <a href="#home" class="nav-link active">Home</a>
+                    <a href="#about" class="nav-link">About</a>
+                    <a href="#works" class="nav-link">Works</a>
+                    <a href="#experience" class="nav-link">Experience</a>
+                    <a href="#certifications" class="nav-link">Certifications</a>
+                    <a href="#contact" class="nav-link">Contact</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main id="sections-root">
+        <div data-section="home"></div>
+        <div data-section="about"></div>
+        <div data-section="works"></div>
+        <div data-section="experience"></div>
+        <div data-section="certifications"></div>
+        <div data-section="contact"></div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 Nichole Tricia R. Perez. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="src/scripts/section-loader.js"></script>
+</body>
+</html>

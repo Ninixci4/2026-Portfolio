@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio Admin - Inquiries</title>
+    <link rel="stylesheet" href="styles.css">
+		<style>
+			/* Slightly enlarge settings form titles without affecting global headings */
+			.settings-panel .settings-form h3 {
+				font-size: 1.6rem;
+				line-height: 1.2;
+			}
+		</style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-auth-compat.js"></script>
+    <script src="../src/scripts/inquiry-service.js"></script>
+</head>
+<body>
+    <main class="admin-wrap">
+        <section class="admin-card auth-card" id="authCard">
+            <h1><i class="fa-solid fa-shield-halved"></i> Admin Sign In</h1>
+            <p>Use your Firebase Auth admin account.</p>
+            <form id="loginForm" class="stack">
+                <label>Email</label>
+                <input type="email" id="adminEmail" required placeholder="admin@email.com" autocomplete="username">
+                <label>Password</label>
+                <input type="password" id="adminPassword" required placeholder="********">
+                <button type="submit">Sign In</button>
+            </form>
+            <p id="authMessage" class="message"></p>
+        </section>
+
+        <section class="admin-card hidden" id="dashboardCard">
+            <div class="admin-shell">
+                <button type="button" class="sidebar-toggle" id="sidebarToggle" aria-label="Toggle navigation menu" aria-controls="adminSidebar" aria-expanded="false">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                <div class="sidebar-backdrop hidden" id="sidebarBackdrop" aria-hidden="true"></div>
+                <aside class="sidebar" id="adminSidebar">
+                    <div class="sidebar-top">
+                        <a class="logo-mark" href="../index.html"><i class="fa-solid fa-sparkles"></i> &lt;Nicia.dev&gt;</a>
+                        <p class="muted small">Signed in as</p>
+                        <p id="currentAdminEmail" class="sidebar-email">-</p>
+                        <nav class="sidebar-nav">
+                            <div class="sidebar-group">
+                                <button type="button" class="nav-pill active" data-view="dashboard"><i class="fa-solid fa-gauge-high"></i> Dashboard</button>
+                                <button type="button" class="nav-pill" data-view="inbox"><i class="fa-solid fa-inbox"></i> Inbox</button>
+                                <button type="button" class="nav-pill" data-view="starred"><i class="fa-regular fa-star"></i> Starred</button>
+                                <button type="button" class="nav-pill" data-view="sent"><i class="fa-regular fa-paper-plane"></i> Sent</button>
+                                <button type="button" class="nav-pill" data-view="archive"><i class="fa-solid fa-box-archive"></i> Archive</button>
+                            </div>
+                            <div class="sidebar-separator" role="separator" aria-hidden="true"></div>
+                            <div class="sidebar-group">
+                                <button type="button" class="nav-pill" data-view="trash"><i class="fa-regular fa-trash-can"></i> Trash</button>
+                                <button type="button" class="nav-pill" data-view="settings"><i class="fa-solid fa-gear"></i> Settings</button>
+                            </div>
+                        </nav>
+                    </div>
+                    <button id="logoutBtn" class="ghost"><i class="fa-solid fa-right-from-bracket"></i> Log Out</button>
+                </aside>
+
+                <section class="main-panel">
+                    <header class="dashboard-header">
+                        <div>
+                            <h1><i class="fa-solid fa-gauge-high"></i> Inquiry Dashboard</h1>
+                            <p class="muted">A Gmail-inspired inbox for your portfolio messages.</p>
+                        </div>
+                        <div class="header-actions">
+                            <span class="chip"><i class="fa-solid fa-bolt"></i> Live Sync</span>
+                            <span class="chip"><i class="fa-solid fa-lock"></i> Secure</span>
+                            <button type="button" class="chip-btn" id="adminThemeToggle" title="Toggle theme">
+                                <i id="adminThemeIcon" class="fa-solid fa-moon"></i>
+                            </button>
+                        </div>
+                    </header>
+
+                    <section class="content-view" id="dashboardView">
+                    <section class="stats-grid">
+                        <article class="stat-card">
+                            <p class="stat-icon"><i class="fa-regular fa-envelope-open"></i></p>
+                            <p class="muted">All Messages</p>
+                            <h2 id="allCount">0</h2>
+                        </article>
+                        <article class="stat-card">
+                            <p class="stat-icon"><i class="fa-solid fa-circle-exclamation"></i></p>
+                            <p class="muted">New</p>
+                            <h2 id="newCount">0</h2>
+                        </article>
+                        <article class="stat-card">
+                            <p class="stat-icon"><i class="fa-solid fa-list-check"></i></p>
+                            <p class="muted">In Progress</p>
+                            <h2 id="progressCount">0</h2>
+                        </article>
+                        <article class="stat-card">
+                            <p class="stat-icon"><i class="fa-solid fa-circle-check"></i></p>
+                            <p class="muted">Resolved</p>
+                            <h2 id="resolvedCount">0</h2>
+                        </article>
+                    </section>
+
+                    <section class="mail-layout" id="dashboardMailLayout">
+                        <div class="mail-list-wrap">
+                            <div class="mail-list-head">
+                                <h3><i class="fa-solid fa-clock-rotate-left"></i> Recent Inquiries</h3>
+                                <div class="list-head-actions">
+                                    <div class="view-toggle" data-scope="dashboard">
+                                        <button type="button" class="toggle-btn active" data-mode="list"><i class="fa-solid fa-list"></i> List</button>
+                                        <button type="button" class="toggle-btn" data-mode="grid"><i class="fa-solid fa-table-cells"></i> Grid</button>
+                                    </div>
+                                    <span id="dashboardEmptyState" class="message hidden">No inquiries yet.</span>
+                                </div>
+                            </div>
+                            <div id="dashboardList" class="inquiries-list"></div>
+                        </div>
+                        <article class="mail-detail" id="dashboardDetail">
+                            <p class="muted"><i class="fa-regular fa-hand-pointer"></i> Select a message to read details.</p>
+                        </article>
+                    </section>
+                    </section>
+
+                    <section class="content-view hidden" id="mailboxView">
+                        <section class="mail-layout">
+                            <div class="mail-list-wrap">
+                                <div class="mail-list-head">
+                                    <h3 id="mailboxTitle"><i class="fa-solid fa-inbox"></i> Inbox</h3>
+                                    <div class="list-head-actions">
+                                        <div class="view-toggle" data-scope="mailbox">
+                                            <button type="button" class="toggle-btn active" data-mode="list"><i class="fa-solid fa-list"></i> List</button>
+                                            <button type="button" class="toggle-btn" data-mode="grid"><i class="fa-solid fa-table-cells"></i> Grid</button>
+                                        </div>
+                                        <span id="mailboxEmptyState" class="message hidden">No inquiries yet.</span>
+                                        <div id="mailboxPagination" class="mailbox-pagination hidden">
+                                            <button type="button" id="mailboxPrevBtn" class="page-btn ghost" aria-label="Previous page">
+                                                <i class="fa-solid fa-chevron-left"></i>
+                                            </button>
+                                            <span id="mailboxPageInfo" class="page-info">Page 1 of 1</span>
+                                            <button type="button" id="mailboxNextBtn" class="page-btn ghost" aria-label="Next page">
+                                                <i class="fa-solid fa-chevron-right"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="mailboxList" class="inquiries-list"></div>
+                            </div>
+                        </section>
+                    </section>
+
+                    <section class="settings-panel hidden content-view" id="settingsView">
+                        <h2><i class="fa-solid fa-gear"></i> Account Settings</h2>
+                        <div class="settings-grid">
+                            <form id="updateEmailForm" class="stack settings-form">
+                                <h3>Change Email</h3>
+                                <label>Current password</label>
+                                <input type="password" id="currentPasswordForEmail" required placeholder="Current password">
+                                <label>New email</label>
+                                <input type="email" id="newAdminEmail" required placeholder="new@email.com">
+                                <button type="submit">Update Email</button>
+                            </form>
+
+                            <form id="updatePasswordForm" class="stack settings-form">
+                                <h3>Change Password</h3>
+                                <label>Current password</label>
+                                <input type="password" id="currentPasswordForPassword" required placeholder="Current password">
+                                <label>New password</label>
+                                <input type="password" id="newAdminPassword" required minlength="8" placeholder="At least 8 characters">
+                                <button type="submit">Update Password</button>
+                            </form>
+                        </div>
+                        <p id="settingsMessage" class="message"></p>
+                    </section>
+                </section>
+            </div>
+        </section>
+    </main>
+
+    <div id="messageModal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="modalSubject">
+        <div class="modal-backdrop" id="modalBackdrop"></div>
+        <article class="modal-card">
+            <button type="button" class="modal-close" id="closeModalBtn" title="Close preview">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div id="modalContent"></div>
+        </article>
+    </div>
+
+    <div id="replyModal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="replyModalTitle">
+        <div class="modal-backdrop" id="replyModalBackdrop"></div>
+        <article class="modal-card">
+            <button type="button" class="modal-close" id="closeReplyModalBtn" title="Close reply">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <h3 id="replyModalTitle"><i class="fa-solid fa-paper-plane"></i> Send Reply</h3>
+            <form id="replyForm" class="stack">
+                <input type="hidden" id="replyTargetId">
+                <label for="replyToEmail">To</label>
+                <input type="email" id="replyToEmail" required>
+                <label for="replySubject">Subject</label>
+                <input type="text" id="replySubject" required>
+                <label for="replyMessage">Message</label>
+                <textarea id="replyMessage" rows="8" required placeholder="Write your reply here..."></textarea>
+                <button type="submit"><i class="fa-solid fa-paper-plane"></i> Save to Sent / Mark Responded</button>
+                <p class="message" id="replyMessageStatus"></p>
+            </form>
+        </article>
+    </div>
+
+    <div class="confirmation-modal" id="actionModal" role="dialog" aria-modal="true" aria-labelledby="actionModalTitle">
+        <div class="confirmation-content">
+            <div class="confirmation-icon" id="actionModalIcon"><i class="fa-solid fa-circle-info"></i></div>
+            <h3 id="actionModalTitle">Please confirm</h3>
+            <p id="actionModalText"></p>
+            <div class="confirmation-actions">
+                <button type="button" id="actionModalCancel" class="confirmation-btn confirmation-btn-cancel">Cancel</button>
+                <button type="button" id="actionModalConfirm" class="confirmation-btn confirmation-btn-confirm">OK</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js?v=20260401b"></script>
+</body>
+</html>
