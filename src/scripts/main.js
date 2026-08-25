@@ -4,7 +4,7 @@
         {
             id: 1,
             title: 'BidaBoss Inc.',
-            description: 'A complete redesign of the Bidaboss e-commerce platform focused on improving user experience, visual consistency, and overall usability for all stakeholders, featuring a cleaner interface, enhanced navigation, and a more streamlined flow.',
+            description: 'A complete redesign of the BidaBoss Inc. e-commerce platform focused on improving user experience, visual consistency, and overall usability for all stakeholders, featuring a cleaner interface, enhanced navigation, and a more streamlined flow.',
             type: 'Website',
             category: 'web',
             image: 'assets/img/Bidaboss.png',
@@ -40,36 +40,37 @@
         {
             id: 4,
             title: 'Circlo',
-            description: 'A relationship-focused mobile app where people create private Circles for couples, friends, and families. I built the Flutter client and Laravel API foundation — theme, routing, auth shells, and Circle isolation — for a calm, private space with shared feed, chat, calendar, and type-specific modules.',
+            description: 'This project is still in progress. Circlo is a private social app for real relationships — not a public feed. Users create isolated Circles for couples, family, or friends, then share memories, chat, plan events, keep calendars, and work on goals together inside that space only. Each Circle stays fully separate, with its own gallery, notes, tasks, and activities. I built the Flutter app and Laravel API foundation so every relationship can have its own calm, private home.',
             type: 'Mobile App',
             category: 'mobile',
-            image: 'assets/img/circlo.svg',
-            gallery: ['assets/img/circlo.svg'],
+            status: 'In progress',
+            image: 'assets/img/circlo_cover.png',
+            gallery: ['assets/img/circlo_cover.png', 'assets/img/circlo_1.jpg', 'assets/img/circlo_2.jpg'],
             techStack: ['Flutter', 'Dart', 'Riverpod', 'Laravel', 'MySQL'],
-            keywords: ['Mobile', 'Flutter', 'Circles'],
+            keywords: ['Mobile', 'Private Circles', 'Relationships'],
             liveSite: 'https://github.com/Ninixci4/Circlo',
-            screenshots: ['assets/img/circlo.svg']
+            screenshots: ['assets/img/circlo_1.jpg', 'assets/img/circlo_2.jpg']
         },
         {
             id: 5,
-            title: 'Bidaboss Supplier Management System',
-            description: 'A supplier-facing system inside Bidaboss for vendor onboarding, product listings, inventory, purchase orders, and status tracking — designed to keep supplier operations clear, consistent, and easier to manage alongside the main platform.',
+            title: 'BidaBoss Supplier Management System',
+            description: 'As Lead UI/UX Designer, I redesigned this existing supplier system at BidaBoss Inc. It supports vendor onboarding, product listings, inventory, purchase orders, and status tracking — designed to keep supplier operations clear, consistent, and easier to manage alongside the main platform.',
             type: 'Web App',
             category: 'web',
-            image: 'assets/img/Bidaboss.png',
-            gallery: ['assets/img/bidaboss_1.png', 'assets/img/bidaboss_2.png'],
+            image: 'assets/img/Supplier_1.png',
+            gallery: ['assets/img/Supplier_1.png', 'assets/img/Supplier_2.png', 'assets/img/Supplier_3.png', 'assets/img/Supplier_4.png', 'assets/img/Supplier_5.png', 'assets/img/Supplier_6.png'],
             techStack: ['HTML', 'CSS', 'JavaScript', 'PHP', 'MySQL'],
             keywords: ['Suppliers', 'Operations', 'Dashboard'],
             liveSite: '#'
         },
         {
             id: 6,
-            title: 'Bidaboss Main System',
-            description: 'The core Bidaboss operations platform for catalog, orders, customers, and internal workflows. I focused on UI/UX and front-end so admins and staff can move through the main system with a cleaner hierarchy, stronger consistency, and faster day-to-day use.',
+            title: 'Warehouse Management System',
+            description: 'As Lead UI/UX Designer, I redesigned this existing warehouse system at BidaBoss Inc. It is the core operations platform for catalog, orders, customers, and internal workflows, with a cleaner hierarchy, stronger consistency, and faster day-to-day use for admins and staff.',
             type: 'Web App',
             category: 'web',
-            image: 'assets/img/bidaboss_1.png',
-            gallery: ['assets/img/Bidaboss.png', 'assets/img/bidaboss_2.png'],
+            image: 'assets/img/main_1.png',
+            gallery: ['assets/img/main_1.png', 'assets/img/main_2.png'],
             techStack: ['HTML', 'CSS', 'JavaScript', 'PHP', 'MySQL'],
             keywords: ['Operations', 'E-commerce', 'Admin'],
             liveSite: '#'
@@ -77,24 +78,24 @@
         {
             id: 7,
             title: 'Quiz Mania',
-            description: 'A mobile quiz app for taking timed multiple-choice quizzes, tracking scores, and reviewing results. Built as a compact, thumb-friendly experience with clear question flow, instant feedback, and a result report at the end of each round.',
+            description: 'A project we built as college students to make reviewing easier. Take timed multiple-choice quizzes across a variety of general knowledge categories, or use it as a reviewer for upcoming tests by adding your own flashcards and creating your own question-and-answer sets. It is also a good reviewer partner.',
             type: 'Mobile App',
             category: 'mobile',
-            image: 'assets/img/quiz-mania.svg',
-            gallery: ['assets/img/quiz-mania.svg'],
+            image: 'assets/img/quiz_cover.png',
+            gallery: ['assets/img/quiz_cover.png', 'assets/img/quizmania_1.jpg', 'assets/img/quizmania_2.jpg', 'assets/img/quizmania_3.jpg', 'assets/img/quizmania_4.jpg', 'assets/img/quizmania_5.jpg', 'assets/img/quizmania_6.jpg', 'assets/img/quizmania_7.jpg'],
             techStack: ['Flutter', 'Dart', 'Firebase'],
-            keywords: ['Mobile', 'Quiz', 'Learning'],
+            keywords: ['Mobile', 'Quiz', 'Reviewer'],
             liveSite: '#',
-            screenshots: ['assets/img/quiz-mania.svg']
+            screenshots: ['assets/img/quizmania_1.jpg', 'assets/img/quizmania_2.jpg', 'assets/img/quizmania_3.jpg', 'assets/img/quizmania_4.jpg', 'assets/img/quizmania_5.jpg', 'assets/img/quizmania_6.jpg', 'assets/img/quizmania_7.jpg']
         },
         {
             id: 8,
-            title: 'Bidaboss Mobile App',
-            description: 'The Bidaboss mobile app for browsing products, managing orders, and staying connected to the platform on the go. I worked on the UI/UX and front-end so shopping and order tracking feel consistent with the web experience, just sized for the phone.',
+            title: 'BidaBoss Inc. Mobile App',
+            description: 'I designed this mobile app while I was still an intern at BidaBoss Inc. It lets users browse products, manage orders, and stay connected to the platform on the go. I worked on the UI/UX and front-end so shopping and order tracking feel consistent with the web experience, just sized for the phone. You can download it on the Google Play Store — search “bidaboss.”',
             type: 'Mobile App',
             category: 'mobile',
-            image: 'assets/img/bidaboss_2.png',
-            gallery: ['assets/img/bidaboss_2.png', 'assets/img/Bidaboss.png'],
+            image: 'assets/img/bidabossmobile_cover.png',
+            gallery: ['assets/img/bidabossmobile_cover.png', 'assets/img/bidaboss_2.png', 'assets/img/Bidaboss.png'],
             techStack: ['Flutter', 'Dart', 'REST API'],
             keywords: ['Mobile', 'E-commerce', 'Orders'],
             liveSite: '#',
@@ -206,9 +207,12 @@
         grid.innerHTML = projects.map((project, i) => `
             <article class="work-card" data-category="${project.category}" style="--i:${i}">
                 <span class="work-index">${String(i + 1).padStart(2, '0')}</span>
-                <div class="work-media"><img src="${project.image}" alt="${project.title}"></div>
+                <div class="work-media">
+                    ${project.category === 'web' ? `<img class="work-media-bg" src="${project.image}" alt="" aria-hidden="true">` : ''}
+                    <img src="${project.image}" alt="${project.title}">
+                </div>
                 <div class="work-meta">
-                    <span class="work-type">${project.type}</span>
+                    <span class="work-type">${[project.kind, project.type, project.status].filter(Boolean).join(' · ')}</span>
                     <h3>${project.title}</h3>
                     <p>${project.description}</p>
                     <div class="work-keywords">${project.keywords.map((keyword) => `<span>${keyword}</span>`).join('')}</div>
@@ -228,10 +232,45 @@
         });
     }
 
+    function bindGalleryCarousel(root) {
+        const carousel = root.querySelector('.gallery-carousel');
+        if (!carousel) return;
+        const images = [...carousel.querySelectorAll('img')];
+        const dots = [...carousel.querySelectorAll('.gallery-dot')];
+        const show = (index) => {
+            const next = (index + images.length) % images.length;
+            carousel.dataset.index = String(next);
+            images.forEach((img, i) => img.classList.toggle('is-active', i === next));
+            dots.forEach((dot, i) => dot.classList.toggle('is-active', i === next));
+        };
+        carousel.querySelector('.gallery-nav.prev')?.addEventListener('click', (e) => {
+            e.stopPropagation();
+            show(Number(carousel.dataset.index) - 1);
+        });
+        carousel.querySelector('.gallery-nav.next')?.addEventListener('click', (e) => {
+            e.stopPropagation();
+            show(Number(carousel.dataset.index) + 1);
+        });
+        dots.forEach((dot) => {
+            dot.addEventListener('click', (e) => {
+                e.stopPropagation();
+                show(Number(dot.dataset.index));
+            });
+        });
+        images.forEach((img) => {
+            img.addEventListener('click', (e) => {
+                e.stopPropagation();
+                window.PhoneMockup?.preview(img);
+            });
+        });
+    }
+
     function openProjectModal(id) {
         const project = projects.find((p) => p.id === id);
         if (!project) return;
         const modal = document.getElementById('projectModal');
+        const kicker = document.getElementById('modalKicker');
+        if (kicker) kicker.textContent = project.kind || 'Professional Project';
         document.getElementById('modalTitle').textContent = project.title;
         document.getElementById('modalDescription').textContent = project.description;
         document.getElementById('modalTechStack').innerHTML = project.techStack.map((tech) => `<span class="tech-tag">${tech}</span>`).join('');
@@ -243,7 +282,24 @@
             gallery.innerHTML = window.PhoneMockup.markup(shots, project.title);
         } else {
             modal.classList.remove('is-mobile-view');
-            gallery.innerHTML = project.gallery.map((src) => `<img src="${src}" alt="${project.title}">`).join('');
+            const images = project.gallery && project.gallery.length ? project.gallery : [project.image];
+            if (images.length > 1) {
+                gallery.innerHTML = `
+                    <div class="gallery-carousel" data-index="0">
+                        ${images.map((src, i) => `<img src="${src}" alt="${project.title} ${i + 1}" class="${i === 0 ? 'is-active' : ''}">`).join('')}
+                        <button type="button" class="gallery-nav prev" aria-label="Previous image"><i class="fas fa-chevron-left"></i></button>
+                        <button type="button" class="gallery-nav next" aria-label="Next image"><i class="fas fa-chevron-right"></i></button>
+                        <div class="gallery-dots">${images.map((_, i) => `<button type="button" class="gallery-dot${i === 0 ? ' is-active' : ''}" data-index="${i}" aria-label="Image ${i + 1}"></button>`).join('')}</div>
+                    </div>
+                `;
+                bindGalleryCarousel(gallery);
+            } else {
+                gallery.innerHTML = `<img src="${images[0]}" alt="${project.title}" class="gallery-preview-image">`;
+                gallery.querySelector('img')?.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    window.PhoneMockup?.preview(e.currentTarget);
+                });
+            }
         }
         const live = document.getElementById('viewLiveSite');
         if (isMobile) {
@@ -272,6 +328,7 @@
         modal.classList.remove('is-open', 'is-mobile-view');
         modal.hidden = true;
         document.body.style.overflow = '';
+        window.PhoneMockup?.closePreview();
     }
 
     function initProjectModal() {
@@ -321,9 +378,37 @@
         if (!cert) return;
         const modal = document.getElementById('certificateModal');
         const image = document.getElementById('certificateImage');
+        const loader = document.getElementById('certificateLoader');
         if (image) {
-            image.src = cert.certificateImage;
+            image.style.display = 'none';
+            if (loader) {
+                loader.hidden = false;
+                loader.classList.add('is-visible');
+            }
+            image.onload = () => {
+                image.style.display = '';
+                if (loader) {
+                    loader.hidden = true;
+                    loader.classList.remove('is-visible');
+                }
+            };
+            image.onerror = () => {
+                image.style.display = '';
+                if (loader) {
+                    loader.hidden = true;
+                    loader.classList.remove('is-visible');
+                }
+            };
             image.alt = cert.title;
+            image.removeAttribute('src');
+            image.src = cert.certificateImage;
+            if (image.complete && image.naturalWidth) {
+                image.style.display = '';
+                if (loader) {
+                    loader.hidden = true;
+                    loader.classList.remove('is-visible');
+                }
+            }
         }
         modal.hidden = false;
         modal.classList.add('is-open');

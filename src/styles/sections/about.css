@@ -5,11 +5,12 @@
 
 .about-bento {
     display: grid;
-    grid-template-columns: 0.9fr 1.1fr 1fr;
+    grid-template-columns: minmax(420px, 1.35fr) 1fr 1fr;
     grid-template-areas:
         "portrait identity identity"
         "portrait stats stats";
     gap: 1rem;
+    align-items: stretch;
 }
 
 .bento-card {
@@ -24,6 +25,10 @@
 .portrait-card {
     grid-area: portrait;
     position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
     padding: 0.7rem;
 }
 
@@ -41,17 +46,22 @@
 .portrait-frame {
     position: relative;
     overflow: hidden;
+    flex: none;
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    height: auto;
+    min-height: 0;
     border-radius: 24px;
-    min-height: 420px;
-    height: 100%;
 }
 
 .about-image {
+    position: absolute;
+    inset: 0;
     display: block;
     width: 100%;
     height: 100%;
     object-fit: cover;
-    min-height: 420px;
+    object-position: center 18%;
 }
 
 .portrait-glow {
@@ -232,7 +242,7 @@
 }
 
 @media (max-width: 980px) {
-    .about-section { padding: 5rem 0 3.4rem; }
+    .about-section { padding: 26vh 0 3.4rem; }
 
     .about-bento {
         grid-template-columns: 1fr;
@@ -247,14 +257,28 @@
     .identity-card,
     .about-stats { grid-area: auto; }
 
-    .portrait-card { padding: 0.55rem; }
-
-    .portrait-frame,
-    .about-image {
-        min-height: 0;
+    .portrait-card {
+        display: block;
         height: auto;
-        max-height: 340px;
-        aspect-ratio: 4 / 5;
+        padding: 0.55rem;
+    }
+
+    .portrait-frame {
+        flex: none;
+        width: 100%;
+        height: auto;
+        min-height: 0;
+        max-height: min(52vh, 380px);
+        aspect-ratio: 3 / 4;
+    }
+
+    .about-image {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        max-height: none;
+        object-fit: cover;
     }
 
     .about-float-card {
@@ -282,18 +306,25 @@
     .stat-card:last-child { grid-column: auto; }
 
     .stat-card {
-        flex-direction: column;
-        align-items: center;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: baseline;
         text-align: center;
-        padding: 0.85rem 0.35rem 0.95rem;
+        padding: 0.85rem 0.25rem 0.95rem;
         border-radius: 20px;
         gap: 0;
     }
 
     .stat-value,
-    .stat-suffix { font-size: 1.5rem; }
+    .stat-suffix {
+        font-size: 1.15rem;
+        line-height: 1;
+        white-space: nowrap;
+    }
 
     .stat-label {
+        flex-basis: 100%;
         margin-top: 0.2rem;
         font-size: 0.7rem;
         line-height: 1.3;
@@ -370,7 +401,10 @@
 @media (max-width: 520px) {
     .about-stats { gap: 0.4rem; }
 
-    .stat-card { padding: 0.7rem 0.2rem 0.8rem; border-radius: 16px; }
+    .stat-card { padding: 0.7rem 0.15rem 0.8rem; border-radius: 16px; }
+
+    .stat-value,
+    .stat-suffix { font-size: 1rem; }
 
     .about-keywords span {
         font-size: 0.74rem;

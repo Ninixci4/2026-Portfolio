@@ -66,6 +66,32 @@
 .certificate-modal-content { position: relative; max-width: min(920px, 94vw); }
 .certificate-modal-content img { max-height: 86vh; border-radius: 16px; box-shadow: var(--shadow); }
 
+.certificate-loader {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.7rem;
+    min-height: 220px;
+    color: #fff;
+    font-size: 0.92rem;
+}
+
+.certificate-loader.is-visible { display: flex; }
+
+.loader-spin {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    border: 3px solid rgba(255,255,255,0.2);
+    border-top-color: var(--c6);
+    animation: load-spin 0.8s linear infinite;
+}
+
+@keyframes load-spin {
+    to { transform: rotate(360deg); }
+}
+
 .close-certificate {
     position: absolute;
     top: -12px;

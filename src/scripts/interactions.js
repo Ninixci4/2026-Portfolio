@@ -83,7 +83,12 @@
     }
 
     function initCounters() {
-        const counters = document.querySelectorAll('[data-count], [data-count]');
+        const workCount = (window.PORTFOLIO_PROJECTS || []).length;
+        document.querySelectorAll('[data-stat="works"]').forEach((el) => {
+            el.dataset.count = String(workCount);
+        });
+
+        const counters = document.querySelectorAll('[data-count]');
         if (!counters.length) return;
         const io = new IntersectionObserver((entries) => {
             entries.forEach((entry) => {

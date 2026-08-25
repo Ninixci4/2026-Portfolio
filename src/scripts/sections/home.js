@@ -13,6 +13,7 @@
         let lastX = 0;
         let lastY = 0;
         const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        const coarse = window.matchMedia('(pointer: coarse)').matches;
 
         function apply() {
             card.style.transform = `translate(calc(-50% + ${state.x}px), ${state.y}px) rotate(${state.rot}deg)`;
@@ -59,7 +60,7 @@
         }
 
         function tick(now) {
-            if (!dragging && !reduce) {
+            if (!dragging && !reduce && !coarse) {
                 const t = now / 1000;
                 const sway = Math.sin(t * 1.35) * 0.22 + Math.sin(t * 0.62) * 0.12;
                 const bounce = Math.sin(t * 2.15) * 0.09;

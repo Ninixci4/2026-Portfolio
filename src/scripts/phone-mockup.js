@@ -50,6 +50,7 @@
         let startY = 0;
         let moved = false;
         let idle = 0;
+        let tapOnPhone = false;
 
         function render() {
             rotX += (targetX - rotX) * 0.16;
@@ -67,6 +68,7 @@
             e.preventDefault();
             dragging = true;
             moved = false;
+            tapOnPhone = Boolean(e.target.closest('.phone, .phone-screen, .phone-slides, .phone-rig'));
             startX = e.clientX;
             startY = e.clientY;
             stage.setPointerCapture?.(e.pointerId);
@@ -76,7 +78,7 @@
             if (!dragging) return;
             const dx = e.clientX - startX;
             const dy = e.clientY - startY;
-            if (Math.hypot(dx, dy) > 4) moved = true;
+            if (Math.hypot(dx, dy) > 10) moved = true;
             targetY = Math.max(-55, Math.min(55, -24 + dx * 0.35));
             targetX = Math.max(-16, Math.min(22, 8 - dy * 0.18));
         });
@@ -86,8 +88,11 @@
             dragging = false;
             targetX = 8;
             targetY = -24;
-            if (!moved && e?.type === 'pointerup' && e.target.closest('.phone-screen, .phone-slides, .phone')) {
-                openPreview(slides[shot]);
+            const shouldPreview = !moved && tapOnPhone && e?.type === 'pointerup';
+            tapOnPhone = false;
+            if (shouldPreview) {
+                const media = slides[shot] || stage.querySelector('.phone-slides .is-active') || stage.querySelector('.phone-slides img, .phone-slides video');
+                openPreview(media);
             }
         };
 
@@ -155,9 +160,11 @@
         const box = ensurePreview();
         const frame = box.querySelector('.phone-preview-frame');
         frame.replaceChildren();
-        if (media.tagName === 'VIDEO') {
+        const src = typeof media === 'string' ? media : (media.currentSrc || media.src);
+        const isVid = typeof media !== 'string' && media.tagName === 'VIDEO';
+        if (isVid) {
             const video = document.createElement('video');
-            video.src = media.currentSrc || media.src;
+            video.src = src;
             video.controls = true;
             video.autoplay = true;
             video.playsInline = true;
@@ -165,8 +172,8 @@
             video.play().catch(() => {});
         } else {
             const img = document.createElement('img');
-            img.src = media.currentSrc || media.src;
-            img.alt = media.alt || 'Screenshot preview';
+            img.src = src;
+            img.alt = (typeof media !== 'string' && media.alt) || 'Screenshot preview';
             frame.appendChild(img);
         }
         box.classList.add('is-open');
@@ -185,6 +192,8 @@
 
     window.PhoneMockup = {
         markup: phoneMarkup,
+        preview: openPreview,
+        closePreview,
         mount(root) {
             (root || document).querySelectorAll('[data-phone]').forEach(bindPhone);
         }

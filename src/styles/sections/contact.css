@@ -45,8 +45,11 @@
     border: 1px solid var(--line);
     text-decoration: none;
     color: inherit;
+    min-width: 0;
     transition: transform 0.25s var(--ease), border-color 0.25s ease, box-shadow 0.25s ease;
 }
+
+.info-item > div { min-width: 0; }
 
 a.info-item:hover {
     transform: translateY(-2px);
@@ -62,6 +65,7 @@ a.info-item:hover {
 .info-icon {
     width: 42px;
     height: 42px;
+    flex-shrink: 0;
     border-radius: 14px;
     display: grid;
     place-items: center;
@@ -148,4 +152,12 @@ a.info-item:hover {
 
 @media (max-width: 900px) {
     .contact-layout { grid-template-columns: 1fr; }
+    .info-value {
+        font-size: clamp(0.68rem, 3.3vw, 0.88rem);
+        white-space: nowrap;
+        word-break: normal;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 100%;
+    }
 }

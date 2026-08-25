@@ -10,40 +10,38 @@
 
     const SCREEN_KITS = {
         circlo: [
-            { label: 'Home', note: 'A quiet landing that puts your closest people first.', src: 'assets/img/circlo.svg' },
-            { label: 'Circles', note: 'Private rooms for couples, friends, and family — each one isolated.', layout: 'grid' },
-            { label: 'Feed', note: 'A shared stream that stays inside the circle, never the public web.', layout: 'list' },
-            { label: 'Chat', note: 'Threads that feel small, warm, and easy to pick back up.', layout: 'chat' },
-            { label: 'Calendar', note: 'Dates, plans, and reminders kept in one private timeline.', layout: 'list' },
-            { label: 'Memories', note: 'Photos and notes that belong to the relationship, not the algorithm.', layout: 'grid' },
-            { label: 'Create', note: 'A short path to start a circle without a long onboarding maze.', layout: 'form' },
-            { label: 'Alerts', note: 'Only the pings that matter, with hierarchy instead of noise.', layout: 'list' },
-            { label: 'Profile', note: 'A personal space that still respects the circle’s privacy rules.', layout: 'profile' },
-            { label: 'Settings', note: 'Isolation, invites, and access — kept clear on purpose.', layout: 'stats' }
+            { label: 'Home', note: 'Your people. Your circle — a private home for every relationship.', src: 'assets/img/circlo_1.jpg' },
+            { label: 'Circles', note: 'Separate spaces for couples, family, or friends. Nothing leaks between them.', src: 'assets/img/circlo_2.jpg' },
+            { label: 'Feed', note: 'A private timeline of photos, notes, and moments — members only.', layout: 'list' },
+            { label: 'Chat', note: 'Built-in messaging with images, voice notes, and files inside the Circle.', layout: 'chat' },
+            { label: 'Calendar', note: 'Shared dates, hangouts, and reminders for the people in that Circle.', layout: 'list' },
+            { label: 'Memories', note: 'A shared gallery and journal so the story of the relationship stays together.', layout: 'grid' },
+            { label: 'Tasks', note: 'Lists, chores, and plans you actually finish together.', layout: 'form' },
+            { label: 'Events', note: 'Plan trips, dinners, and milestones without another group chat.', layout: 'list' },
+            { label: 'Profile', note: 'Switch Circles anytime. Each one keeps its own memories and members.', layout: 'profile' },
+            { label: 'Settings', note: 'Invite, leave, archive, and keep the space private by default.', layout: 'stats' }
         ],
         'quiz-mania': [
-            { label: 'Home', note: 'Jump into a round without a cluttered lobby.', src: 'assets/img/quiz-mania.svg' },
-            { label: 'Categories', note: 'Topics laid out for thumbs, not a dense table of contents.', layout: 'grid' },
-            { label: 'Play', note: 'One question, one beat, no extra chrome in the way.', layout: 'list' },
-            { label: 'Timer', note: 'Pressure you can feel without panicking the layout.', layout: 'stats' },
-            { label: 'Feedback', note: 'Instant right/wrong states that still look considered.', layout: 'chat' },
-            { label: 'Results', note: 'A score screen that reads as a moment, not a spreadsheet.', layout: 'stats' },
-            { label: 'Review', note: 'Walk back through answers with a calm, readable rhythm.', layout: 'list' },
-            { label: 'Ranks', note: 'A leaderboard that stays playful instead of noisy.', layout: 'list' },
-            { label: 'Profile', note: 'Streaks and history without turning into a dashboard dump.', layout: 'profile' },
-            { label: 'Settings', note: 'Sound, difficulty, and account — short and obvious.', layout: 'form' }
+            { label: 'Home', note: 'Play, flashcards, and leaderboards — a simple start for reviewing.', src: 'assets/img/quizmania_1.jpg' },
+            { label: 'Play', note: 'Pick a category and jump into a timed multiple-choice round.', src: 'assets/img/quizmania_2.jpg' },
+            { label: 'Question', note: 'One question at a time, with clear choices and a timer.', src: 'assets/img/quizmania_3.jpg' },
+            { label: 'Categories', note: 'General knowledge topics laid out so you can review what you need.', src: 'assets/img/quizmania_4.jpg' },
+            { label: 'Flashcards', note: 'Add your own cards and build a set for an upcoming test.', src: 'assets/img/quizmania_5.jpg' },
+            { label: 'Create set', note: 'Write your own questions and answers for a reviewer partner session.', src: 'assets/img/quizmania_6.jpg' },
+            { label: 'Answer', note: 'Flip the card, check the answer, then move to the next one.', src: 'assets/img/quizmania_7.jpg' }
         ],
         'bidaboss-app': [
-            { label: 'Home', note: 'A shoppable first screen that still feels like Bidaboss.', src: 'assets/img/bidaboss_2.png' },
-            { label: 'Catalog', note: 'Product browsing sized for a thumb, not a desktop grid.', src: 'assets/img/Bidaboss.png' },
-            { label: 'Search', note: 'Find an item fast, then get out of the way.', layout: 'form' },
-            { label: 'Product', note: 'Details, price, and action stacked in a clear order.', layout: 'list' },
-            { label: 'Cart', note: 'A compact checkout path that doesn’t feel like a form maze.', layout: 'list' },
-            { label: 'Orders', note: 'Status you can scan in a second on the go.', layout: 'stats' },
-            { label: 'Tracking', note: 'Where the order is, without burying it in account menus.', layout: 'list' },
-            { label: 'Saved', note: 'A quieter shelf for later, still on-brand.', layout: 'grid' },
-            { label: 'Account', note: 'Profile and preferences with the same visual language as web.', layout: 'profile' },
-            { label: 'Support', note: 'A short line back to help when something stalls.', layout: 'chat' }
+            { label: 'Splash', note: 'The BidaBoss Inc. welcome screen I designed during my internship.', src: 'assets/img/bidaapp_1.jpg' },
+            { label: 'Home', note: 'A shoppable first screen that still feels like BidaBoss Inc.', src: 'assets/img/bidaapp_2.jpg' },
+            { label: 'Catalog', note: 'Product browsing sized for a thumb, not a desktop grid.', src: 'assets/img/bidaapp_3.jpg' },
+            { label: 'Search', note: 'Find an item fast, then get out of the way.', src: 'assets/img/bidaapp_4.jpg' },
+            { label: 'Product', note: 'Details, price, and action stacked in a clear order.', src: 'assets/img/bidaapp_5.jpg' },
+            { label: 'Cart', note: 'A compact checkout path that doesn’t feel like a form maze.', src: 'assets/img/bidaapp_6.jpg' },
+            { label: 'Orders', note: 'Status you can scan in a second on the go.', src: 'assets/img/bidaapp_7.jpg' },
+            { label: 'Pickup', note: 'Order states like for approval, pickup, and delivery.', src: 'assets/img/bidaapp_8.jpg' },
+            { label: 'Tracking', note: 'Where the order is, without burying it in account menus.', src: 'assets/img/bidaapp_9.jpg' },
+            { label: 'Account', note: 'Profile and preferences with the same visual language as web.', src: 'assets/img/bidaapp_10.jpg' },
+            { label: 'Empty state', note: 'Clear empty screens so the flow still feels designed.', src: 'assets/img/bidaapp_11.jpg' }
         ]
     };
 
@@ -76,13 +74,15 @@
     }
 
     document.title = `${project.title} — Nicia`;
-    document.getElementById('showKicker').textContent = project.type;
+    document.getElementById('showKicker').textContent = [project.kind, project.type, project.status]
+        .filter(Boolean)
+        .join(' · ');
     document.getElementById('showTitle').textContent = project.title;
     document.getElementById('showLead').textContent = project.description;
     document.getElementById('showTech').innerHTML = project.techStack.map((tech) => `<span>${tech}</span>`).join('');
 
     const shots = project.screenshots && project.screenshots.length ? project.screenshots : project.gallery;
-    const phoneMedia = project.video ? [project.video, ...shots] : shots;
+    const phoneMedia = shots.length ? shots : (project.video ? [project.video] : [project.image]);
     const phoneMount = document.getElementById('showPhone');
     if (window.PhoneMockup) {
         phoneMount.innerHTML = window.PhoneMockup.markup(phoneMedia, project.title);
