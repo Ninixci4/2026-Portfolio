@@ -1,37 +1,80 @@
 <section id="home" class="section home-section">
-    <div class="fireflies" aria-hidden="true">
-        <span class="firefly"></span><span class="firefly"></span><span class="firefly"></span><span class="firefly"></span><span class="firefly"></span><span class="firefly"></span><span class="firefly"></span><span class="firefly"></span><span class="firefly"></span><span class="firefly"></span><span class="firefly"></span><span class="firefly"></span><span class="firefly"></span><span class="firefly"></span><span class="firefly"></span><span class="firefly"></span><span class="firefly"></span><span class="firefly"></span>
-    </div>
-    <div class="container">
-        <div class="home-content">
-            <div class="home-left">
-                <h1 class="main-heading">Hi, I am <span class="gradient-text">Nicia</span></h1>
-                <h2 class="sub-heading">Web Designer and UI/UX Designer</h2>
-                <p class="description">I create beautiful and functional digital experiences that help businesses connect with their audience. Passionate about crafting intuitive interfaces and responsive designs.</p>
-                <div class="keywords">
-                    <span class="keyword-tag">web</span>
-                    <span class="keyword-tag">mobile</span>
-                    <span class="keyword-tag">ui/ux</span>
-                    <span class="keyword-tag">front-end</span>
-                </div>
-                <div class="home-buttons">
-                    <a href="#works" class="btn btn-gradient">View my work</a>
-                    <a href="#contact" class="btn btn-gradient-secondary">Let's create something</a>
-                </div>
+    <div class="hero-aurora" aria-hidden="true"></div>
+    <div class="hero-rings" aria-hidden="true"></div>
+
+    <div class="container home-stage">
+        <div class="home-copy" data-reveal>
+            <p class="home-kicker">
+                <span class="pulse-dot"></span>
+                Available for UI/UX &amp; Front-end roles
+            </p>
+            <h1 class="home-title">
+                <span class="home-hello">Hi, I am</span>
+                <span class="home-name">Nicia</span>
+            </h1>
+            <p class="home-role">
+                <span class="role-static">I craft</span>
+                <span class="role-rotator" id="roleRotator">
+                    <span>spatial interfaces</span>
+                    <span>UI/UX systems</span>
+                    <span>front-end motion</span>
+                    <span>product stories</span>
+                </span>
+            </p>
+            <p class="home-lead">
+                Web designer and UI/UX designer turning ideas into immersive, usable digital products — with motion, hierarchy, and craft that hiring teams can feel on first scroll.
+            </p>
+            <div class="home-tags">
+                <span class="chip magnetic" data-cursor="chip">web</span>
+                <span class="chip magnetic" data-cursor="chip">mobile</span>
+                <span class="chip magnetic" data-cursor="chip">ui/ux</span>
+                <span class="chip magnetic" data-cursor="chip">front-end</span>
             </div>
-            <div class="home-right">
-                <div class="slideshow-container">
-                    <div class="slide active"><img src="assets/img/sample (2).jpg" alt="Project 1"></div>
-                    <div class="slide"><img src="assets/img/sample (3).jpg" alt="Project 2"></div>
-                    <div class="slide"><img src="assets/img/sample (4).jpg" alt="Project 3"></div>
-                    <button class="slideshow-btn prev" id="prevSlide"><i class="fas fa-chevron-left"></i></button>
-                    <button class="slideshow-btn next" id="nextSlide"><i class="fas fa-chevron-right"></i></button>
-                    <div class="slideshow-dots">
-                        <span class="dot active" data-slide="0"></span>
-                        <span class="dot" data-slide="1"></span>
-                        <span class="dot" data-slide="2"></span>
-                    </div>
+            <div class="home-actions">
+                <a href="#works" class="btn btn-primary magnetic" data-cursor="view">
+                    <span>View my work</span>
+                    <i class="fas fa-arrow-down"></i>
+                </a>
+                <a href="#contact" class="btn btn-ghost magnetic" data-cursor="hello">Let’s create something</a>
+            </div>
+        </div>
+
+        <div class="home-visual">
+            <div class="id-stage">
+                <div class="id-clip" aria-hidden="true">
+                    <span class="clip-top"></span>
+                    <span class="clip-pin"></span>
                 </div>
+                <svg class="id-lace" viewBox="0 0 320 420" preserveAspectRatio="none" aria-hidden="true">
+                    <path id="lacePath" d="M160 8 C 160 90, 160 160, 160 248"></path>
+                </svg>
+                <article class="id-card" id="idCard" aria-label="Hanging identification card. Drag to pull.">
+                    <div class="id-ring" aria-hidden="true"></div>
+                    <div class="id-badge">STAFF ID</div>
+                    <div class="id-photo-wrap">
+                        <img class="id-photo" src="assets/img/formal.jpg" alt="Nichole Tricia R. Perez">
+                    </div>
+                    <div class="id-meta">
+                        <p class="id-name">Nichole Tricia R. Perez</p>
+                        <p class="id-role">UI/UX Designer · Front-end</p>
+                        <p class="id-handle">&lt;Nicia.dev&gt;</p>
+                    </div>
+                    <div class="id-chip" aria-hidden="true"></div>
+                </article>
+                <p class="id-hint">Pull the ID</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="home-marquee" aria-hidden="true">
+        <div class="marquee-track">
+            <div class="marquee-group">
+                <span>UI/UX Design</span><span>Front-end Development</span><span>Design Systems</span>
+                <span>Prototyping</span><span>Spatial Motion</span><span>Responsive Craft</span>
+            </div>
+            <div class="marquee-group">
+                <span>UI/UX Design</span><span>Front-end Development</span><span>Design Systems</span>
+                <span>Prototyping</span><span>Spatial Motion</span><span>Responsive Craft</span>
             </div>
         </div>
     </div>

@@ -3,64 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nicia — UI/UX Designer & Front-end Developer</title>
-    <meta name="description" content="Portfolio of Nichole Tricia R. Perez — UI/UX designer and front-end developer crafting spatial, interactive digital experiences.">
+    <title>App showcase — Nicia</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lenis@1.1.18/dist/lenis.css">
     <link rel="stylesheet" href="src/styles/style.css">
-    <link rel="stylesheet" href="src/styles/sections/home.css">
-    <link rel="stylesheet" href="src/styles/sections/about.css">
-    <link rel="stylesheet" href="src/styles/sections/works.css">
     <link rel="stylesheet" href="src/styles/phone-mockup.css">
-    <link rel="stylesheet" href="src/styles/sections/experience.css">
-    <link rel="stylesheet" href="src/styles/sections/certifications.css">
-    <link rel="stylesheet" href="src/styles/sections/contact.css">
+    <link rel="stylesheet" href="src/styles/showcase.css">
 </head>
 <body>
-    <a class="skip-link" href="#main">Skip to content</a>
-
-    <div class="preloader" id="preloader" aria-hidden="false">
-        <div class="preloader-blob"></div>
-        <p class="preloader-logo">Nicia</p>
-        <span class="preloader-bar"></span>
-    </div>
-
+    <a class="skip-link" href="#showcase">Skip to content</a>
     <div class="cursor" id="cursor" aria-hidden="true">
         <span class="cursor-dot"></span>
         <span class="cursor-ring"></span>
         <span class="cursor-label">view</span>
     </div>
-
     <div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
-
     <div class="spatial-field" aria-hidden="true">
         <span class="orb orb-a"></span>
         <span class="orb orb-b"></span>
         <span class="orb orb-c"></span>
-        <span class="orb orb-d"></span>
         <span class="grain"></span>
         <span class="spotlight" id="spotlight"></span>
     </div>
 
-    <header class="header" id="siteHeader">
+    <header class="header">
         <nav class="navbar">
             <div class="nav-capsule">
-                <a href="#home" class="logo magnetic" data-cursor="logo">&lt;Nicia.dev&gt;</a>
+                <a class="nav-back" id="navBack" href="index.html#works">
+                    <i class="fas fa-arrow-left" aria-hidden="true"></i>
+                    <span>Back</span>
+                </a>
+                <a href="index.html#home" class="logo">&lt;Nicia.dev&gt;</a>
                 <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation" aria-expanded="false" aria-controls="navLinks">
                     <span></span><span></span><span></span>
                 </button>
                 <div class="nav-links" id="navLinks">
-                    <a href="#home" class="nav-link active" data-magnetic>Home</a>
-                    <a href="#about" class="nav-link" data-magnetic>About</a>
-                    <a href="#works" class="nav-link" data-magnetic>Works</a>
-                    <a href="#experience" class="nav-link" data-magnetic>Experience</a>
-                    <a href="#certifications" class="nav-link" data-magnetic>Certifications</a>
-                    <a href="#contact" class="nav-link" data-magnetic>Contact</a>
+                    <a href="index.html#home" class="nav-link">Home</a>
+                    <a href="index.html#about" class="nav-link">About</a>
+                    <a href="index.html#works" class="nav-link active">Works</a>
+                    <a href="index.html#experience" class="nav-link">Experience</a>
+                    <a href="index.html#certifications" class="nav-link">Certifications</a>
+                    <a href="index.html#contact" class="nav-link">Contact</a>
                 </div>
-                <button class="theme-toggle magnetic" id="themeToggle" aria-label="Toggle theme">
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
                     <svg class="theme-icon theme-icon-moon" viewBox="0 0 24 24" aria-hidden="true">
                         <defs>
                             <mask id="themeMoonMask">
@@ -81,29 +69,39 @@
         </nav>
     </header>
 
-    <main id="main">
-        <div data-section="home"></div>
-        <div data-section="about"></div>
-        <div data-section="works"></div>
-        <div data-section="experience"></div>
-        <div data-section="certifications"></div>
-        <div data-section="contact"></div>
-    </main>
+    <main id="showcase">
+        <section class="showcase-hero">
+            <p class="showcase-kicker" id="showKicker">Mobile app</p>
+            <h1 id="showTitle">App</h1>
+            <p class="showcase-lead" id="showLead"></p>
+            <div class="showcase-tech" id="showTech"></div>
+            <div class="showcase-phone" id="showPhone"></div>
+        </section>
 
-    <footer class="footer">
-        <div class="container footer-grid">
-            <a href="#home" class="footer-logo">Nicia.dev</a>
-            <p class="footer-copy">Designing interfaces people can feel — then building them with care.</p>
-            <p class="footer-legal">&copy; 2026 Nichole Tricia R. Perez</p>
-        </div>
-    </footer>
+        <section class="showcase-reel" id="showReel">
+            <div class="showcase-sticky">
+                <div class="showcase-reel-head">
+                    <p class="section-index">UI screens</p>
+                    <h2>Flip through the flow</h2>
+                    <p class="reel-hint">Scroll to turn the deck · tap a card to see the reverse</p>
+                </div>
+                <div class="flip-stage">
+                    <div class="flip-track" id="shotTrack"></div>
+                </div>
+                <div class="flip-meter" aria-hidden="true">
+                    <span id="shotIndex">01</span>
+                    <span class="flip-meter-line"></span>
+                    <span id="shotTotal">10</span>
+                </div>
+            </div>
+        </section>
+    </main>
 
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.18/dist/lenis.min.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore-compat.js"></script>
-    <script src="src/scripts/inquiry-service.js"></script>
-    <script src="src/scripts/section-loader.js"></script>
+    <script src="src/scripts/projects.js"></script>
+    <script src="src/scripts/phone-mockup.js"></script>
+    <script src="src/scripts/showcase.js"></script>
 </body>
 </html>

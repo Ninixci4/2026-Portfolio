@@ -1,9 +1,10 @@
-(function() {
+(function () {
     const sectionNames = ['home', 'about', 'works', 'experience', 'certifications', 'contact'];
 
     async function loadSections() {
         await Promise.all(sectionNames.map(async (name) => {
-            const slot = document.querySelector(`[data-section="${name}"]`);
+            const slot = document.querySelector(`[data-section="${name}"]`)
+                || document.querySelector(`[data-section="${name}"]`);
             if (!slot) return;
             const res = await fetch(`src/components/${name}.html`);
             if (!res.ok) {
@@ -31,7 +32,11 @@
             await loadScript(`src/scripts/sections/${name}.js`);
         }
 
+        await loadScript('src/scripts/projects.js');
+        await loadScript('src/scripts/phone-mockup.js');
         await loadScript('src/scripts/main.js');
+        await loadScript('src/scripts/interactions.js');
+        document.dispatchEvent(new Event('portfolio:ready'));
     }
 
     if (document.readyState === 'loading') {

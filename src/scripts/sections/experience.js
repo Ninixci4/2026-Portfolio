@@ -62,7 +62,14 @@
                 panel.hidden = true;
             });
             timelineItems.forEach((item) => item.classList.remove('float-open'));
+            document.body.classList.remove('experience-modal-open');
         }
+
+        floatPanels.forEach((panel) => {
+            panel.addEventListener('click', (event) => {
+                if (event.target === panel) closeAllFloatPanels();
+            });
+        });
 
         floatTriggers.forEach((trigger) => {
             trigger.addEventListener('click', (event) => {
@@ -78,7 +85,9 @@
                     const item = trigger.closest('.timeline-item');
                     if (item) item.classList.add('float-open');
                     trigger.setAttribute('aria-expanded', 'true');
+                    document.body.appendChild(targetPanel);
                     targetPanel.hidden = false;
+                    document.body.classList.add('experience-modal-open');
                     requestAnimationFrame(() => targetPanel.classList.add('open'));
                 }
             });
@@ -93,7 +102,7 @@
         });
 
         document.addEventListener('click', (event) => {
-            if (!event.target.closest('#experience .timeline-float')) {
+            if (!event.target.closest('.timeline-float-trigger, .timeline-float-panel')) {
                 closeAllFloatPanels();
             }
         });
