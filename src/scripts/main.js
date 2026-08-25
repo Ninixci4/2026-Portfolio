@@ -162,7 +162,7 @@
         const header = document.querySelector('.header');
         const navToggle = document.getElementById('navToggle');
         const navLinks = document.getElementById('navLinks');
-        const currentTheme = localStorage.getItem('theme') || 'light';
+        const currentTheme = localStorage.getItem('theme') || 'dark';
 
         html.setAttribute('data-theme', currentTheme);
 
