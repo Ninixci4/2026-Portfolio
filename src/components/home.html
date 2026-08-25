@@ -40,28 +40,60 @@
         </div>
 
         <div class="home-visual">
-            <div class="id-stage">
-                <div class="id-clip" aria-hidden="true">
-                    <span class="clip-top"></span>
-                    <span class="clip-pin"></span>
+            <div class="instax-stage" id="instaxStage">
+                <div class="instax-scene">
+                    <div class="instax-rig" id="instaxRig">
+                        <article class="polaroid" id="polaroid" aria-hidden="true">
+                            <div class="polaroid-drag" id="polaroidDrag">
+                                <span class="polaroid-edge" aria-hidden="true"></span>
+                                <span class="polaroid-thickness" aria-hidden="true"></span>
+                                <div class="polaroid-sheet">
+                                    <div class="polaroid-photo">
+                                        <img src="assets/img/pic.jpg" alt="Nichole Tricia R. Perez">
+                                        <span class="polaroid-develop"></span>
+                                        <span class="polaroid-gloss"></span>
+                                        <span class="polaroid-sheen"></span>
+                                    </div>
+                                    <p class="polaroid-caption">Nicia</p>
+                                </div>
+                            </div>
+                        </article>
+
+                        <button class="instax-camera" id="instaxCamera" type="button" data-cursor="snap" aria-label="Print a polaroid portrait">
+                            <span class="cam-shell">
+                                <span class="cam-back-plate" aria-hidden="true"></span>
+                                <span class="cam-lid">
+                                    <span class="cam-lid-top"></span>
+                                    <span class="cam-lid-front">
+                                        <span class="cam-slot"></span>
+                                        <span class="cam-flash"><span class="cam-flash-glass"></span></span>
+                                        <span class="cam-finder"></span>
+                                    </span>
+                                </span>
+                                <span class="cam-body">
+                                    <span class="cam-skin"></span>
+                                    <span class="cam-bevel" aria-hidden="true"></span>
+                                    <span class="cam-lens">
+                                        <span class="cam-lens-hood"></span>
+                                        <span class="cam-lens-ring"></span>
+                                        <span class="cam-lens-barrel"></span>
+                                        <span class="cam-lens-glass"><span class="cam-glint"></span></span>
+                                    </span>
+                                    <span class="cam-shutter">
+                                        <span class="cam-shutter-stem"></span>
+                                    </span>
+                                    <span class="cam-mirror"></span>
+                                    <span class="cam-led"></span>
+                                    <span class="cam-badge">instant</span>
+                                </span>
+                                <span class="cam-strap" aria-hidden="true"></span>
+                                <span class="cam-burst" aria-hidden="true"></span>
+                            </span>
+                        </button>
+                        <span class="cam-ground-shadow" aria-hidden="true"></span>
+                    </div>
                 </div>
-                <svg class="id-lace" viewBox="0 0 320 420" preserveAspectRatio="none" aria-hidden="true">
-                    <path id="lacePath" d="M160 8 C 160 90, 160 160, 160 248"></path>
-                </svg>
-                <article class="id-card" id="idCard" aria-label="Hanging identification card. Drag to pull.">
-                    <div class="id-ring" aria-hidden="true"></div>
-                    <div class="id-badge">STAFF ID</div>
-                    <div class="id-photo-wrap">
-                        <img class="id-photo" src="assets/img/pic.jpg" alt="Nichole Tricia R. Perez">
-                    </div>
-                    <div class="id-meta">
-                        <p class="id-name">Nichole Tricia R. Perez</p>
-                        <p class="id-role">UI/UX Designer · Front-end</p>
-                        <p class="id-handle">&lt;Nicia.dev&gt;</p>
-                    </div>
-                    <div class="id-chip" aria-hidden="true"></div>
-                </article>
-                <p class="id-hint">Pull the ID</p>
+                <p class="instax-hint" id="instaxHint">Click to print</p>
             </div>
         </div>
     </div>

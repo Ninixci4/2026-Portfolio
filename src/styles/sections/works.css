@@ -267,4 +267,18 @@
     .work-card[data-category="web"] .work-media { height: 280px; }
     .work-card[data-category="web"] .work-media img:not(.work-media-bg) { padding: 0.55rem; }
     .modal-shell { grid-template-columns: 1fr; max-height: 92vh; overflow: auto; }
+    .modal-actions {
+        flex-wrap: nowrap;
+        gap: 0.5rem;
+        width: 100%;
+    }
+    .modal-actions .btn {
+        flex: 1 1 0;
+        width: 0;
+        min-width: 0;
+        padding: 0.68rem 0.7rem;
+        font-size: 0.8rem;
+        white-space: nowrap;
+        box-shadow: none;
+    }
 }
