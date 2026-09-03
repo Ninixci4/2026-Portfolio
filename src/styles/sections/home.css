@@ -496,13 +496,17 @@
 
 .cam-badge {
     position: absolute;
-    right: 30px;
-    bottom: 22px;
+    right: 16px;
+    bottom: 18px;
+    max-width: 96px;
     font-family: var(--label);
-    font-size: 0.62rem;
-    letter-spacing: 0.22em;
+    font-size: 0.68rem;
+    line-height: 1.35;
+    letter-spacing: 0.1em;
+    text-align: right;
     text-transform: uppercase;
     color: #8f7ab8;
+    pointer-events: none;
 }
 
 .cam-strap {

@@ -144,8 +144,10 @@
 
 .stat-label { width: 100%; color: var(--muted); }
 
-.about-people,
-.about-why { margin-top: 3.5rem; }
+.about-why,
+.about-stack { margin-top: 3.5rem; }
+
+.about-stack { position: relative; }
 
 .about-block-head {
     max-width: 640px;
@@ -175,14 +177,12 @@
     font-size: 1.02rem;
 }
 
-.people-grid,
 .why-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 1rem;
 }
 
-.people-card,
 .why-card {
     position: relative;
     overflow: hidden;
@@ -190,27 +190,14 @@
     background: var(--glass);
     border: 1px solid var(--line);
     transition: transform 0.35s var(--ease), box-shadow 0.35s ease;
+    padding: 1.35rem 1.15rem;
+    text-align: left;
 }
 
-.people-card {
-    text-align: center;
-    padding: 1.5rem 1.1rem 1.35rem;
-}
-
-.people-num {
-    display: block;
-    font-family: var(--label);
-    letter-spacing: 0.14em;
-    color: var(--c4);
-    font-size: 0.78rem;
-    margin-bottom: 0.7rem;
-}
-
-.people-icon,
 .why-icon {
     width: 52px;
     height: 52px;
-    margin: 0 auto 0.85rem;
+    margin: 0 0 0.9rem;
     display: grid;
     place-items: center;
     border-radius: 16px;
@@ -219,26 +206,94 @@
     font-size: 1.15rem;
 }
 
-.people-card h4,
 .why-card h4 {
     font-size: 1.05rem;
     margin-bottom: 0.45rem;
 }
 
-.people-card p,
 .why-card p { color: var(--muted); font-size: 0.92rem; }
 
-.why-card {
-    padding: 1.35rem 1.15rem;
-    text-align: left;
-}
-
-.why-card .why-icon { margin: 0 0 0.9rem; }
-
-.people-card:hover,
 .why-card:hover {
     transform: translateY(-8px);
     box-shadow: var(--shadow);
+}
+
+.stack-sr {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+}
+
+.stack-marquees {
+    display: grid;
+    gap: 0.85rem;
+}
+
+.stack-marquee {
+    overflow: hidden;
+    mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent);
+}
+
+.stack-track {
+    display: flex;
+    width: max-content;
+    flex-wrap: nowrap;
+    will-change: transform;
+}
+
+.stack-marquee.is-rtl .stack-track {
+    animation: aboutStackMarquee 36s linear infinite;
+}
+
+.stack-marquee.is-ltr .stack-track {
+    animation: aboutStackMarquee 42s linear infinite reverse;
+}
+
+.stack-marquee:hover .stack-track {
+    animation-play-state: paused;
+}
+
+.stack-group {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    gap: 0.75rem;
+    padding-right: 0.75rem;
+    flex-shrink: 0;
+}
+
+.stack-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    flex-shrink: 0;
+    padding: 0.62rem 1.05rem 0.62rem 0.85rem;
+    border-radius: 999px;
+    border: 1px solid var(--line);
+    background: var(--glass);
+    backdrop-filter: blur(14px);
+    box-shadow: var(--shadow);
+    color: var(--text);
+    font-size: 0.92rem;
+    white-space: nowrap;
+}
+
+.stack-chip i {
+    font-size: 1.2rem;
+    line-height: 1;
+    width: 1.2rem;
+    text-align: center;
+}
+
+.stack-chip .is-mono {
+    color: var(--text);
+}
+
+@keyframes aboutStackMarquee {
+    from { transform: translate3d(0, 0, 0); }
+    to { transform: translate3d(-50%, 0, 0); }
 }
 
 @media (max-width: 980px) {
@@ -330,8 +385,8 @@
         line-height: 1.3;
     }
 
-    .about-people,
-    .about-why { margin-top: 2.5rem; }
+    .about-why,
+    .about-stack { margin-top: 2.5rem; }
 
     .about-block-head {
         text-align: left;
@@ -340,13 +395,11 @@
 
     .about-block-title { font-size: 1.8rem; }
 
-    .people-grid,
     .why-grid {
         grid-template-columns: 1fr;
         gap: 0.7rem;
     }
 
-    .people-card,
     .why-card {
         display: grid;
         grid-template-columns: auto 1fr;
@@ -359,18 +412,8 @@
         padding: 1rem;
     }
 
-    .people-card:hover,
     .why-card:hover { transform: none; }
 
-    .people-num {
-        position: absolute;
-        top: 0.85rem;
-        right: 0.95rem;
-        margin: 0;
-        font-size: 0.7rem;
-    }
-
-    .people-icon,
     .why-icon {
         grid-area: icon;
         width: 44px;
@@ -380,15 +423,13 @@
         font-size: 1rem;
     }
 
-    .people-card h4,
     .why-card h4 {
         grid-area: title;
         margin: 0;
-        padding-right: 2rem;
+        padding-right: 0;
         font-size: 1rem;
     }
 
-    .people-card p,
     .why-card p {
         grid-area: copy;
         font-size: 0.88rem;
@@ -396,6 +437,13 @@
     }
 
     .why-copy { display: contents; }
+
+    .stack-marquees { gap: 0.65rem; }
+
+    .stack-chip {
+        padding: 0.52rem 0.9rem 0.52rem 0.72rem;
+        font-size: 0.84rem;
+    }
 }
 
 @media (max-width: 520px) {
@@ -413,7 +461,30 @@
 }
 
 @media (hover: none) {
-    .people-card:hover,
     .why-card:hover,
     .bento-card[data-tilt] { transform: none; }
+
+    .stack-marquee:hover .stack-track {
+        animation-play-state: running;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .stack-track {
+        width: 100%;
+        flex-wrap: wrap;
+        justify-content: center;
+        transform: none;
+    }
+
+    .stack-group {
+        flex-wrap: wrap;
+        justify-content: center;
+        padding-right: 0;
+        gap: 0.55rem;
+    }
+
+    .stack-group + .stack-group { display: none; }
+
+    .stack-marquee { mask-image: none; overflow: visible; }
 }

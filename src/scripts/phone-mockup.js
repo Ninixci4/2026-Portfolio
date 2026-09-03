@@ -92,7 +92,14 @@
             tapOnPhone = false;
             if (shouldPreview) {
                 const media = slides[shot] || stage.querySelector('.phone-slides .is-active') || stage.querySelector('.phone-slides img, .phone-slides video');
-                openPreview(media);
+                openPreview(media, {
+                    items: [...slides].map((node) => ({
+                        src: node.currentSrc || node.src,
+                        alt: node.alt || 'Screenshot preview',
+                        isVideo: node.tagName === 'VIDEO'
+                    })),
+                    index: shot
+                });
             }
         };
 
@@ -133,49 +140,280 @@
         render();
     }
 
-    function ensurePreview() {
-        let box = document.querySelector('.phone-preview');
-        if (box) return box;
-        box = document.createElement('div');
-        box.className = 'phone-preview';
-        box.innerHTML = `
-            <button type="button" class="phone-preview-close" aria-label="Close preview">
-                <i class="fas fa-times"></i>
-            </button>
-            <div class="phone-preview-frame"></div>
-        `;
-        document.body.appendChild(box);
-        box.querySelector('.phone-preview-close').addEventListener('click', closePreview);
-        box.addEventListener('click', (e) => {
-            if (e.target === box) closePreview();
-        });
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && box.classList.contains('is-open')) closePreview();
-        });
-        return box;
+    const previewState = { items: [], index: 0 };
+    const zoomState = { scale: 1, x: 0, y: 0, min: 1, max: 4 };
+
+    function resetPreviewZoom(stage, box) {
+        zoomState.scale = 1;
+        zoomState.x = 0;
+        zoomState.y = 0;
+        if (stage) {
+            stage.classList.remove('is-zoomed', 'is-panning');
+            stage.style.transform = '';
+        }
+        box?.classList.remove('is-image-zoomed');
     }
 
-    function openPreview(media) {
-        if (!media) return;
+    function applyPreviewTransform(stage, box) {
+        if (!stage) return;
+        stage.style.transform = `translate3d(${zoomState.x}px, ${zoomState.y}px, 0) scale(${zoomState.scale})`;
+        stage.classList.toggle('is-zoomed', zoomState.scale > 1);
+        box?.classList.toggle('is-image-zoomed', zoomState.scale > 1);
+    }
+
+    function setPreviewZoom(stage, box, nextScale) {
+        zoomState.scale = Math.min(zoomState.max, Math.max(zoomState.min, nextScale));
+        if (zoomState.scale <= 1) {
+            zoomState.x = 0;
+            zoomState.y = 0;
+        }
+        applyPreviewTransform(stage, box);
+    }
+
+    function bindPreviewZoom(box, stage, mediaEl) {
+        if (!stage || !mediaEl || mediaEl.tagName === 'VIDEO') return;
+        resetPreviewZoom(stage, box);
+
+        const onWheel = (e) => {
+            e.preventDefault();
+            setPreviewZoom(stage, box, zoomState.scale + (e.deltaY > 0 ? -0.12 : 0.12));
+        };
+
+        mediaEl.addEventListener('wheel', onWheel, { passive: false });
+
+        mediaEl.addEventListener('dblclick', (e) => {
+            e.stopPropagation();
+            if (zoomState.scale > 1) resetPreviewZoom(stage, box);
+            else setPreviewZoom(stage, box, 2);
+        });
+
+        let panning = false;
+        let panStartX = 0;
+        let panStartY = 0;
+        let panOriginX = 0;
+        let panOriginY = 0;
+
+        stage.addEventListener('pointerdown', (e) => {
+            if (zoomState.scale <= 1 || e.button !== 0) return;
+            panning = true;
+            panStartX = e.clientX;
+            panStartY = e.clientY;
+            panOriginX = zoomState.x;
+            panOriginY = zoomState.y;
+            stage.classList.add('is-panning');
+            stage.setPointerCapture?.(e.pointerId);
+        });
+
+        stage.addEventListener('pointermove', (e) => {
+            if (!panning) return;
+            zoomState.x = panOriginX + (e.clientX - panStartX);
+            zoomState.y = panOriginY + (e.clientY - panStartY);
+            applyPreviewTransform(stage, box);
+        });
+
+        const endPan = () => {
+            if (!panning) return;
+            panning = false;
+            stage.classList.remove('is-panning');
+        };
+
+        stage.addEventListener('pointerup', endPan);
+        stage.addEventListener('pointercancel', endPan);
+
+        let pinchStart = 0;
+        let pinchScale = 1;
+
+        stage.addEventListener('touchstart', (e) => {
+            if (e.touches.length !== 2) return;
+            pinchStart = Math.hypot(
+                e.touches[0].clientX - e.touches[1].clientX,
+                e.touches[0].clientY - e.touches[1].clientY
+            );
+            pinchScale = zoomState.scale;
+        }, { passive: true });
+
+        stage.addEventListener('touchmove', (e) => {
+            if (e.touches.length !== 2 || !pinchStart) return;
+            e.preventDefault();
+            const distance = Math.hypot(
+                e.touches[0].clientX - e.touches[1].clientX,
+                e.touches[0].clientY - e.touches[1].clientY
+            );
+            setPreviewZoom(stage, box, pinchScale * (distance / pinchStart));
+        }, { passive: false });
+
+        stage.addEventListener('touchend', () => {
+            pinchStart = 0;
+        });
+    }
+
+    function mediaFromItem(item) {
+        if (typeof item === 'string') {
+            return { src: item, alt: 'Screenshot preview', isVideo: isVideo(item) };
+        }
+        if (item && item.src) return item;
+        if (!item) return null;
+        return {
+            src: item.currentSrc || item.src,
+            alt: item.alt || 'Screenshot preview',
+            isVideo: item.tagName === 'VIDEO'
+        };
+    }
+
+    function buildPreviewItems(media, options = {}) {
+        if (options.items && options.items.length) {
+            return {
+                items: options.items.map((item) => mediaFromItem(item)).filter(Boolean),
+                index: options.index ?? 0
+            };
+        }
+        const single = mediaFromItem(media);
+        if (!single) return { items: [], index: 0 };
+        return { items: [single], index: 0 };
+    }
+
+    function updatePreviewChrome(box) {
+        const hasMany = previewState.items.length > 1;
+        box.classList.toggle('has-gallery', hasMany);
+        const prev = box.querySelector('.phone-preview-nav.prev');
+        const next = box.querySelector('.phone-preview-nav.next');
+        const dotsWrap = box.querySelector('.phone-preview-dots');
+        if (prev) prev.disabled = !hasMany;
+        if (next) next.disabled = !hasMany;
+        if (dotsWrap) {
+            dotsWrap.innerHTML = hasMany
+                ? previewState.items.map((_, i) => `
+                    <button type="button" class="phone-preview-dot${i === previewState.index ? ' is-active' : ''}" data-index="${i}" aria-label="Image ${i + 1} of ${previewState.items.length}"></button>
+                `).join('')
+                : '';
+            dotsWrap.querySelectorAll('.phone-preview-dot').forEach((dot) => {
+                dot.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    showPreviewSlide(Number(dot.dataset.index));
+                });
+            });
+        }
+        const counter = box.querySelector('.phone-preview-counter');
+        if (counter) {
+            counter.textContent = hasMany ? `${previewState.index + 1} / ${previewState.items.length}` : '';
+            counter.hidden = !hasMany;
+        }
+    }
+
+    function renderPreviewSlide() {
         const box = ensurePreview();
         const frame = box.querySelector('.phone-preview-frame');
+        const item = previewState.items[previewState.index];
+        if (!item) return;
+        resetPreviewZoom(null, box);
         frame.replaceChildren();
-        const src = typeof media === 'string' ? media : (media.currentSrc || media.src);
-        const isVid = typeof media !== 'string' && media.tagName === 'VIDEO';
-        if (isVid) {
+        if (item.isVideo) {
+            box.classList.add('is-video-preview');
             const video = document.createElement('video');
-            video.src = src;
+            video.src = item.src;
             video.controls = true;
             video.autoplay = true;
             video.playsInline = true;
             frame.appendChild(video);
             video.play().catch(() => {});
         } else {
+            box.classList.remove('is-video-preview');
+            const stage = document.createElement('div');
+            stage.className = 'phone-preview-stage';
             const img = document.createElement('img');
-            img.src = src;
-            img.alt = (typeof media !== 'string' && media.alt) || 'Screenshot preview';
-            frame.appendChild(img);
+            img.src = item.src;
+            img.alt = item.alt || 'Screenshot preview';
+            img.draggable = false;
+            stage.appendChild(img);
+            frame.appendChild(stage);
+            bindPreviewZoom(box, stage, img);
         }
+        updatePreviewChrome(box);
+    }
+
+    function showPreviewSlide(index) {
+        if (!previewState.items.length) return;
+        previewState.index = (index + previewState.items.length) % previewState.items.length;
+        renderPreviewSlide();
+    }
+
+    function ensurePreview() {
+        let box = document.querySelector('.phone-preview');
+        if (box && box.dataset.previewVersion === '2') return box;
+        if (box) box.remove();
+        box = document.createElement('div');
+        box.className = 'phone-preview';
+        box.dataset.previewVersion = '2';
+        box.innerHTML = `
+            <button type="button" class="phone-preview-close" aria-label="Close preview">
+                <i class="fas fa-times"></i>
+            </button>
+            <button type="button" class="phone-preview-nav prev" aria-label="Previous image">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+            <button type="button" class="phone-preview-nav next" aria-label="Next image">
+                <i class="fas fa-chevron-right"></i>
+            </button>
+            <div class="phone-preview-frame"></div>
+            <div class="phone-preview-zoom-controls" aria-label="Zoom controls">
+                <button type="button" class="phone-preview-zoom in" aria-label="Zoom in">
+                    <i class="fas fa-search-plus"></i>
+                </button>
+                <button type="button" class="phone-preview-zoom out" aria-label="Zoom out">
+                    <i class="fas fa-search-minus"></i>
+                </button>
+                <button type="button" class="phone-preview-zoom reset" aria-label="Reset zoom">
+                    <i class="fas fa-compress"></i>
+                </button>
+            </div>
+            <p class="phone-preview-counter" hidden aria-live="polite"></p>
+            <div class="phone-preview-dots" role="tablist" aria-label="Preview images"></div>
+        `;
+        document.body.appendChild(box);
+        box.querySelector('.phone-preview-close').addEventListener('click', closePreview);
+        box.querySelector('.phone-preview-nav.prev')?.addEventListener('click', (e) => {
+            e.stopPropagation();
+            showPreviewSlide(previewState.index - 1);
+        });
+        box.querySelector('.phone-preview-nav.next')?.addEventListener('click', (e) => {
+            e.stopPropagation();
+            showPreviewSlide(previewState.index + 1);
+        });
+        box.addEventListener('click', (e) => {
+            if (e.target === box) closePreview();
+        });
+        box.querySelector('.phone-preview-zoom.in')?.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const stage = box.querySelector('.phone-preview-stage');
+            if (stage) setPreviewZoom(stage, box, zoomState.scale + 0.25);
+        });
+        box.querySelector('.phone-preview-zoom.out')?.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const stage = box.querySelector('.phone-preview-stage');
+            if (stage) setPreviewZoom(stage, box, zoomState.scale - 0.25);
+        });
+        box.querySelector('.phone-preview-zoom.reset')?.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const stage = box.querySelector('.phone-preview-stage');
+            if (stage) resetPreviewZoom(stage, box);
+        });
+        document.addEventListener('keydown', (e) => {
+            if (!box.classList.contains('is-open')) return;
+            if (e.key === 'Escape') closePreview();
+            if (previewState.items.length < 2) return;
+            if (e.key === 'ArrowLeft') showPreviewSlide(previewState.index - 1);
+            if (e.key === 'ArrowRight') showPreviewSlide(previewState.index + 1);
+        });
+        return box;
+    }
+
+    function openPreview(media, options = {}) {
+        const next = buildPreviewItems(media, options);
+        if (!next.items.length) return;
+        previewState.items = next.items;
+        previewState.index = Math.max(0, Math.min(next.index, next.items.length - 1));
+        const box = ensurePreview();
+        renderPreviewSlide();
         box.classList.add('is-open');
         document.body.classList.add('preview-open');
     }
@@ -185,9 +423,17 @@
         if (!box) return;
         const video = box.querySelector('video');
         if (video) video.pause();
-        box.classList.remove('is-open');
+        box.classList.remove('is-open', 'has-gallery', 'is-video-preview', 'is-image-zoomed');
         document.body.classList.remove('preview-open');
         box.querySelector('.phone-preview-frame')?.replaceChildren();
+        box.querySelector('.phone-preview-dots')?.replaceChildren();
+        const counter = box.querySelector('.phone-preview-counter');
+        if (counter) {
+            counter.textContent = '';
+            counter.hidden = true;
+        }
+        previewState.items = [];
+        previewState.index = 0;
     }
 
     window.PhoneMockup = {

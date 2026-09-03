@@ -7,10 +7,23 @@ window.PORTFOLIO_PROJECTS = [
         kind: 'Professional Project',
         category: 'web',
         image: 'assets/img/Bidaboss.png',
-        gallery: ['assets/img/bidaboss_1.png', 'assets/img/bidaboss_2.png'],
+        gallery: ['assets/img/bidaboss_1.png'],
         techStack: ['HTML', 'CSS', 'JavaScript', 'React', 'Node.js'],
         keywords: ['Web', 'E-commerce', 'Responsive'],
         liveSite: 'https://bidaboss.ph'
+    },
+    {
+        id: 10,
+        title: 'DREAM',
+        description: 'A sample mockup UI design requested by the client for DREAM — a front-end design concept for a wellness and beauty technology brand. The site explores product storytelling, ritual-focused layout, and promotional visuals using AI-generated images of their product. This is a concept presentation, not a production build.',
+        type: 'UI Design Concept',
+        kind: 'Client Project',
+        category: 'web',
+        image: 'assets/img/dream.png',
+        gallery: ['assets/img/dream.png'],
+        techStack: ['Next.js', 'React', 'TypeScript', 'Tailwind CSS', 'Three.js'],
+        keywords: ['Mockup', 'UI Concept', 'AI Visuals'],
+        liveSite: 'https://dream-skincare.vercel.app'
     },
     {
         id: 2,

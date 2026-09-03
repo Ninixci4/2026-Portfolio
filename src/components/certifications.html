@@ -5,8 +5,36 @@
             <h2 class="section-title">Certifications &amp; seminars</h2>
             <p class="section-intro">A snapshot of continuous learning across design, cloud, leadership, and front-end.</p>
         </header>
-        <div class="certifications-grid" id="certificationsGrid"></div>
     </div>
+
+    <div class="product-showcase" id="productShowcase" aria-roledescription="carousel" aria-label="Certifications">
+        <div class="product-showcase__stage">
+            <div class="product-showcase__glow" aria-hidden="true"></div>
+            <div class="product-showcase__beam" aria-hidden="true"></div>
+
+            <button class="product-showcase__nav product-showcase__nav--prev" type="button" aria-label="Previous certificate">
+                <i class="fas fa-chevron-left" aria-hidden="true"></i>
+            </button>
+
+            <div class="product-showcase__viewport">
+                <div class="product-showcase__track" id="certificationsGrid"></div>
+            </div>
+
+            <button class="product-showcase__nav product-showcase__nav--next" type="button" aria-label="Next certificate">
+                <i class="fas fa-chevron-right" aria-hidden="true"></i>
+            </button>
+        </div>
+
+        <div class="product-showcase__info" aria-live="polite">
+            <div class="product-showcase__category"></div>
+            <h3 class="product-showcase__name"></h3>
+            <p class="product-showcase__desc"></p>
+            <button type="button" class="product-showcase__cta">View certificate</button>
+        </div>
+
+        <div class="product-showcase__dots" role="tablist" aria-label="Certificate slides"></div>
+    </div>
+
     <div class="certificate-modal" id="certificateModal" hidden>
         <div class="certificate-modal-content">
             <button class="close-certificate" id="closeCertificate" aria-label="Close certificate"><i class="fas fa-times"></i></button>

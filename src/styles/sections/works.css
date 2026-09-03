@@ -231,7 +231,18 @@
     font-size: 0.82rem;
 }
 .modal-title { font-size: 2rem; margin: 0.4rem 0 0.8rem; }
-.modal-description { color: var(--muted); margin-bottom: 1.2rem; }
+.modal-description {
+    color: var(--muted);
+    margin: 0 0 2rem;
+}
+
+.modal-tech {
+    margin: 0 0 2rem;
+}
+
+.modal-tech h4 {
+    margin: 0 0 0.85rem;
+}
 
 .close-modal {
     position: absolute;
@@ -245,7 +256,7 @@
     color: #fff;
 }
 
-.tech-tags { display: flex; flex-wrap: wrap; gap: 0.45rem; margin-bottom: 1.2rem; }
+.tech-tags { display: flex; flex-wrap: wrap; gap: 0.45rem; margin-bottom: 0; }
 
 .tech-tag {
     padding: 0.35rem 0.8rem;
@@ -255,7 +266,54 @@
     font-size: 0.82rem;
 }
 
-.modal-actions { display: flex; gap: 0.7rem; flex-wrap: wrap; }
+.modal-actions {
+    display: flex;
+    gap: 0.7rem;
+    flex-wrap: wrap;
+    margin-top: 0.5rem;
+}
+
+@media (min-width: 981px) {
+    .project-modal.is-web-view .modal-shell {
+        width: min(1360px, 94vw);
+        min-height: min(82vh, 820px);
+        max-height: min(94vh, 980px);
+        grid-template-columns: 1.35fr 0.65fr;
+    }
+
+    .project-modal.is-web-view .modal-visual {
+        padding: 1.5rem 1.75rem;
+    }
+
+    .project-modal.is-web-view .modal-gallery img,
+    .project-modal.is-web-view .gallery-carousel img.is-active {
+        max-height: calc(94vh - 4rem);
+        object-fit: contain;
+    }
+
+    .project-modal.is-web-view .modal-copy {
+        display: flex;
+        flex-direction: column;
+        min-height: 0;
+        padding: 2rem 2rem 2rem;
+    }
+
+    .project-modal.is-web-view .modal-description {
+        flex: 0 0 auto;
+        overflow: visible;
+        padding-right: 0;
+    }
+
+    .project-modal.is-web-view .modal-tech {
+        flex: 0 0 auto;
+    }
+
+    .project-modal.is-web-view .modal-actions {
+        margin-top: 0.75rem;
+        padding-top: 0;
+        flex-shrink: 0;
+    }
+}
 
 @media (max-width: 980px) {
     .work-card {

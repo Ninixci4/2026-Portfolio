@@ -260,7 +260,10 @@
         images.forEach((img) => {
             img.addEventListener('click', (e) => {
                 e.stopPropagation();
-                window.PhoneMockup?.preview(img);
+                window.PhoneMockup?.preview(img, {
+                    items: images.map((node) => ({ src: node.src, alt: node.alt })),
+                    index: images.indexOf(img)
+                });
             });
         });
     }
@@ -276,7 +279,9 @@
         document.getElementById('modalTechStack').innerHTML = project.techStack.map((tech) => `<span class="tech-tag">${tech}</span>`).join('');
         const gallery = document.getElementById('modalGallery');
         const isMobile = project.category === 'mobile';
+        const isWeb = project.category === 'web';
         modal.classList.toggle('is-mobile-view', isMobile);
+        modal.classList.toggle('is-web-view', isWeb);
         if (isMobile && window.PhoneMockup) {
             const shots = project.screenshots && project.screenshots.length ? project.screenshots : project.gallery;
             gallery.innerHTML = window.PhoneMockup.markup(shots, project.title);
@@ -325,7 +330,7 @@
 
     function closeProjectModal() {
         const modal = document.getElementById('projectModal');
-        modal.classList.remove('is-open', 'is-mobile-view');
+        modal.classList.remove('is-open', 'is-mobile-view', 'is-web-view');
         modal.hidden = true;
         document.body.style.overflow = '';
         window.PhoneMockup?.closePreview();
@@ -356,21 +361,32 @@
     }
 
     function renderCertifications() {
-        const grid = document.getElementById('certificationsGrid');
-        if (!grid) return;
-        grid.innerHTML = certifications.map((cert) => `
-            <article class="certification-card" data-tilt>
-                <i class="${cert.icon} cert-icon"></i>
-                <span class="cert-category">${cert.category}</span>
-                <h3 class="cert-title">${cert.title}</h3>
-                <p class="cert-organization">${cert.organization}</p>
-                <p class="cert-date">${cert.date}</p>
-                <p class="cert-location">${cert.location}</p>
+        const track = document.getElementById('certificationsGrid');
+        if (!track) return;
+
+        const desc = (cert) => `${cert.organization} · ${cert.date} · ${cert.location}`;
+
+        track.innerHTML = certifications.map((cert, i) => `
+            <article
+                class="product-showcase__item certification-card${i === 0 ? ' is-center' : ''}"
+                data-id="${cert.id}"
+                data-category="${cert.category.replace(/"/g, '&quot;')}"
+                data-name="${cert.title.replace(/"/g, '&quot;')}"
+                data-desc="${desc(cert).replace(/"/g, '&quot;')}"
+                role="group"
+                aria-label="${cert.title.replace(/"/g, '&quot;')}"
+                aria-current="${i === 0 ? 'true' : 'false'}"
+                tabindex="${i === 0 ? 0 : -1}"
+            >
+                <div class="product-showcase__card">
+                    <img src="${cert.certificateImage}" alt="${cert.title.replace(/"/g, '&quot;')}" loading="lazy" draggable="false">
+                </div>
             </article>
         `).join('');
-        grid.querySelectorAll('.certification-card').forEach((card, i) => {
-            card.addEventListener('click', () => openCertificateModal(certifications[i].id));
-        });
+
+        const showcase = document.getElementById('productShowcase');
+        if (showcase) showcase._showcaseBound = false;
+        if (window.initProductShowcase) window.initProductShowcase();
     }
 
     function openCertificateModal(id) {
