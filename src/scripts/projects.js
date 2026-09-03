@@ -15,14 +15,14 @@ window.PORTFOLIO_PROJECTS = [
     {
         id: 10,
         title: 'DREAM',
-        description: 'A sample mockup UI design requested by the client for DREAM — a front-end design concept for a wellness and beauty technology brand. The site explores product storytelling, ritual-focused layout, and promotional visuals using AI-generated images of their product. This is a concept presentation, not a production build.',
+        description: 'A sample mockup UI design requested by the client for DREAM — a networking company spanning wellness and beauty technology. This front-end design concept covers three surfaces: the company website, an Admin Command Center, and a Members Website. Product storytelling and promotional visuals use AI-generated images of their product.',
         type: 'UI Design Concept',
         kind: 'Client Project',
         category: 'web',
         image: 'assets/img/dream.png',
         gallery: ['assets/img/dream.png'],
         techStack: ['Next.js', 'React', 'TypeScript', 'Tailwind CSS', 'Three.js'],
-        keywords: ['Mockup', 'UI Concept', 'AI Visuals'],
+        keywords: ['Networking', 'UI Concept', 'AI Visuals'],
         liveSite: 'https://dream-skincare.vercel.app'
     },
     {
