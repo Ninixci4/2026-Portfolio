@@ -9,7 +9,6 @@
         const dotsWrap = root.querySelector('.product-showcase__dots');
         const prevBtn = root.querySelector('.product-showcase__nav--prev');
         const nextBtn = root.querySelector('.product-showcase__nav--next');
-        const cta = root.querySelector('.product-showcase__cta');
         const categoryEl = root.querySelector('.product-showcase__category');
         const nameEl = root.querySelector('.product-showcase__name');
         const descEl = root.querySelector('.product-showcase__desc');
@@ -62,7 +61,6 @@
                 if (categoryEl) categoryEl.textContent = item.dataset.category || '';
                 if (nameEl) nameEl.textContent = item.dataset.name || '';
                 if (descEl) descEl.textContent = item.dataset.desc || '';
-                if (cta) cta.dataset.id = item.dataset.id || '';
                 info.classList.remove('is-switching');
             };
 
@@ -103,6 +101,13 @@
             if (id && window.openCertificateModal) window.openCertificateModal(id);
         };
 
+        const suppressClick = () => {
+            ignoreClick = true;
+            window.setTimeout(() => {
+                ignoreClick = false;
+            }, 120);
+        };
+
         if (dotsWrap) {
             dotsWrap.innerHTML = '';
             items.forEach((_, i) => {
@@ -121,7 +126,8 @@
             item.classList.add('certification-card');
             item.dataset.cursor = 'view';
 
-            item.addEventListener('click', () => {
+            item.addEventListener('click', (e) => {
+                e.preventDefault();
                 if (ignoreClick) return;
                 if (i === active) openActiveCertificate();
                 else goTo(i);
@@ -138,7 +144,6 @@
 
         prevBtn?.addEventListener('click', () => goTo(active - 1));
         nextBtn?.addEventListener('click', () => goTo(active + 1));
-        cta?.addEventListener('click', openActiveCertificate);
 
         root.addEventListener('keydown', (e) => {
             if (e.key === 'ArrowLeft') goTo(active - 1);
@@ -147,13 +152,13 @@
 
         viewport.addEventListener('pointerdown', (e) => {
             if (e.button && e.button !== 0) return;
+            if (e.target.closest('.product-showcase__nav')) return;
             pointerDown = true;
             dragging = false;
             startX = e.clientX;
             startY = e.clientY;
             dragX = 0;
             viewport.classList.add('is-dragging');
-            viewport.setPointerCapture?.(e.pointerId);
         });
 
         viewport.addEventListener('pointermove', (e) => {
@@ -167,28 +172,32 @@
             layout(dx, true);
         });
 
-        const endDrag = () => {
+        const endDrag = (e) => {
             if (!pointerDown) return;
             pointerDown = false;
             viewport.classList.remove('is-dragging');
-            if (dragging && Math.abs(dragX) > 40) {
-                ignoreClick = true;
-                goTo(dragX < 0 ? active + 1 : active - 1);
-                window.setTimeout(() => {
-                    ignoreClick = false;
-                }, 80);
+
+            const dx = (e && e.clientX != null ? e.clientX - startX : dragX);
+            const dy = e && e.clientY != null ? e.clientY - startY : 0;
+            const swiped = dragging && Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy);
+
+            if (swiped) {
+                suppressClick();
+                goTo(dx < 0 ? active + 1 : active - 1);
             } else {
                 layout();
+                if (Math.abs(dx) < 12 && Math.abs(dy) < 12) {
+                    suppressClick();
+                    openActiveCertificate();
+                }
             }
+
             dragging = false;
             dragX = 0;
         };
 
         viewport.addEventListener('pointerup', endDrag);
         viewport.addEventListener('pointercancel', endDrag);
-        viewport.addEventListener('pointerleave', () => {
-            if (pointerDown) endDrag();
-        });
 
         viewport.addEventListener('wheel', (e) => {
             if (Math.abs(e.deltaX) <= Math.abs(e.deltaY)) return;

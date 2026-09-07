@@ -562,8 +562,8 @@
         renderProjects();
         initProjectModal();
         initFilters();
-        renderCertifications();
         initCertificateModal();
+        renderCertifications();
         initContactForm();
     }
 
