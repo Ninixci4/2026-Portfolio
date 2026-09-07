@@ -208,7 +208,7 @@
             <article class="work-card" data-category="${project.category}" style="--i:${i}">
                 <span class="work-index">${String(i + 1).padStart(2, '0')}</span>
                 <div class="work-media">
-                    ${project.category === 'web' ? `<img class="work-media-bg" src="${project.image}" alt="" aria-hidden="true">` : ''}
+                    ${project.category === 'web' || project.category === 'ui' ? `<img class="work-media-bg" src="${project.image}" alt="" aria-hidden="true">` : ''}
                     <img src="${project.image}" alt="${project.title}">
                 </div>
                 <div class="work-meta">
@@ -279,7 +279,7 @@
         document.getElementById('modalTechStack').innerHTML = project.techStack.map((tech) => `<span class="tech-tag">${tech}</span>`).join('');
         const gallery = document.getElementById('modalGallery');
         const isMobile = project.category === 'mobile';
-        const isWeb = project.category === 'web';
+        const isWeb = project.category === 'web' || project.category === 'ui';
         modal.classList.toggle('is-mobile-view', isMobile);
         modal.classList.toggle('is-web-view', isWeb);
         if (isMobile && window.PhoneMockup) {
@@ -314,7 +314,7 @@
             live.rel = 'noopener';
             live.style.display = '';
         } else if (project.liveSite && project.liveSite !== '#') {
-            live.textContent = 'View live site';
+            live.textContent = project.liveLabel || 'View live site';
             live.href = project.liveSite.trim();
             live.target = '_blank';
             live.rel = 'noopener';

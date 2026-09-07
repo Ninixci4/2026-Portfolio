@@ -91,6 +91,20 @@ window.PORTFOLIO_PROJECTS = [
         liveSite: '#'
     },
     {
+        id: 11,
+        title: 'MetroRest Condotel',
+        description: 'A UI/UX mockup for MetroRest Condotel — a luxury hospitality brand. The Figma file covers the marketing landing experience plus role-based dashboards for SuperAdmin, unit owners, and housekeepers, with a shared design system for color, type, and layout.',
+        type: 'UI/UX Mockup',
+        kind: 'Client Project',
+        category: 'ui',
+        image: 'assets/img/metrorest.png',
+        gallery: ['assets/img/figma_metrorest.png'],
+        techStack: ['Figma', 'UI/UX', 'Design System'],
+        keywords: ['Hospitality', 'Dashboard', 'Figma'],
+        liveSite: 'https://www.figma.com/design/QnQmWiJsugyKZm5YNTJtDe/MetroRest---Mockup-Design--Copy-?node-id=0-1&t=mikDqigANpluuYJ1-1',
+        liveLabel: 'View in Figma'
+    },
+    {
         id: 8,
         slug: 'bidaboss-app',
         title: 'BidaBoss Inc. Mobile App',

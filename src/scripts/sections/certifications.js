@@ -4,7 +4,7 @@
         if (!root) return;
 
         const viewport = root.querySelector('.product-showcase__viewport');
-        const stage = root.querySelector('.product-showcase__stage');
+        const track = root.querySelector('.product-showcase__track');
         const info = root.querySelector('.product-showcase__info');
         const dotsWrap = root.querySelector('.product-showcase__dots');
         const prevBtn = root.querySelector('.product-showcase__nav--prev');
@@ -16,85 +16,42 @@
 
         let items = [...root.querySelectorAll('.product-showcase__item')];
         const total = items.length;
-        if (!total || !viewport || !stage) return;
+        if (!total || !viewport || !track) return;
 
         if (root._showcaseBound) return;
         root._showcaseBound = true;
 
         const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
         let active = 0;
-        let prevOffsets = items.map((_, i) => i);
         let wheelLock = false;
         let pointerDown = false;
+        let dragging = false;
         let startX = 0;
+        let startY = 0;
+        let dragX = 0;
+        let ignoreClick = false;
 
-        const wrapOffset = (index, activeIndex = active) => {
-            let offset = index - activeIndex;
-            if (offset > total / 2) offset -= total;
-            if (offset < -total / 2) offset += total;
-            return offset;
+        const slideWidth = () => viewport.clientWidth || 1;
+
+        const translateFor = (index, extra = 0) => {
+            return `translate3d(${(-index * slideWidth()) + extra}px, 0, 0)`;
         };
 
-        const layout = () => {
+        const layout = (extra = 0, instant = false) => {
             items = [...root.querySelectorAll('.product-showcase__item')];
-            const width = viewport.clientWidth || window.innerWidth;
-            const isMobile = width <= 640;
-            const visibleAbs = isMobile ? 2 : 3;
-            const cardW = Math.round(Math.min(isMobile ? width * 0.78 : width * 0.36, isMobile ? 300 : 460));
-            const cardH = Math.round(cardW * 0.64);
-            const centerScale = isMobile ? 1.14 : 1.24;
-            const tilt = reduce ? 0 : (isMobile ? 12 : 18);
-            const step = Math.round(cardW * (isMobile ? 0.46 : 0.5));
-            const stageH = Math.round(cardH * centerScale + (isMobile ? 100 : 130));
-
-            root.style.setProperty('--ps-card-w', `${cardW}px`);
-            root.style.setProperty('--ps-card-h', `${cardH}px`);
-            root.style.setProperty('--ps-scale-active', String(centerScale));
-            root.style.setProperty('--ps-stage-h', `${stageH}px`);
-            stage.style.height = `${stageH}px`;
-
-            const nextOffsets = items.map((_, i) => wrapOffset(i));
+            if (instant || reduce) track.style.transition = 'none';
+            track.style.transform = translateFor(active, extra);
+            if (instant || reduce) {
+                void track.offsetWidth;
+                track.style.transition = '';
+            }
 
             items.forEach((item, i) => {
-                const offset = nextOffsets[i];
-                const abs = Math.abs(offset);
-                const visible = abs <= visibleAbs;
-                const wrapped = Math.abs(offset - prevOffsets[i]) > total / 2;
-                const card = item.querySelector('.product-showcase__card');
-
-                if (wrapped) {
-                    item.style.transition = 'none';
-                    if (card) card.style.transition = 'none';
-                    item.style.opacity = '0';
-                }
-
-                const scale = offset === 0
-                    ? centerScale
-                    : Math.max(0.64, 0.86 - abs * 0.09);
-                const z = offset === 0 ? 0 : -abs * 45;
-                const x = offset * step;
-                const brightness = offset === 0 ? 1 : Math.max(0.65, 1 - abs * 0.15);
-
-                item.style.transform =
-                    `translate3d(calc(-50% + ${x}px), -50%, ${z}px) scale(${scale})`;
-                item.style.setProperty('--ry', `${-offset * tilt}deg`);
-
-                item.style.opacity = String(!visible ? 0 : offset === 0 ? 1 : Math.max(0.4, 1 - abs * 0.2));
-                item.style.filter = offset === 0 ? 'none' : `brightness(${brightness})`;
-                item.style.zIndex = String(100 - abs);
-                item.style.pointerEvents = visible ? 'auto' : 'none';
-                item.classList.toggle('is-center', offset === 0);
-                item.setAttribute('aria-current', offset === 0 ? 'true' : 'false');
-                item.tabIndex = offset === 0 ? 0 : -1;
-
-                if (wrapped) {
-                    void item.offsetWidth;
-                    item.style.transition = '';
-                    if (card) card.style.transition = '';
-                }
+                const isActive = i === active;
+                item.classList.toggle('is-center', isActive);
+                item.setAttribute('aria-current', isActive ? 'true' : 'false');
+                item.tabIndex = isActive ? 0 : -1;
             });
-
-            prevOffsets = nextOffsets;
         };
 
         const setInfo = (index) => {
@@ -127,11 +84,17 @@
             });
         };
 
+        const syncNav = () => {
+            if (prevBtn) prevBtn.disabled = active === 0;
+            if (nextBtn) nextBtn.disabled = active === total - 1;
+        };
+
         const goTo = (index) => {
-            active = ((index % total) + total) % total;
+            active = Math.max(0, Math.min(total - 1, index));
             layout();
             setInfo(active);
             updateDots();
+            syncNav();
         };
 
         const openActiveCertificate = () => {
@@ -159,6 +122,7 @@
             item.dataset.cursor = 'view';
 
             item.addEventListener('click', () => {
+                if (ignoreClick) return;
                 if (i === active) openActiveCertificate();
                 else goTo(i);
             });
@@ -184,21 +148,46 @@
         viewport.addEventListener('pointerdown', (e) => {
             if (e.button && e.button !== 0) return;
             pointerDown = true;
+            dragging = false;
             startX = e.clientX;
+            startY = e.clientY;
+            dragX = 0;
             viewport.classList.add('is-dragging');
+            viewport.setPointerCapture?.(e.pointerId);
         });
 
-        viewport.addEventListener('pointerup', (e) => {
+        viewport.addEventListener('pointermove', (e) => {
+            if (!pointerDown) return;
+            const dx = e.clientX - startX;
+            const dy = e.clientY - startY;
+            if (!dragging && Math.abs(dx) < 8 && Math.abs(dy) < 8) return;
+            if (Math.abs(dx) < Math.abs(dy)) return;
+            dragging = true;
+            dragX = dx;
+            layout(dx, true);
+        });
+
+        const endDrag = () => {
             if (!pointerDown) return;
             pointerDown = false;
             viewport.classList.remove('is-dragging');
-            const dx = e.clientX - startX;
-            if (Math.abs(dx) > 40) goTo(dx < 0 ? active + 1 : active - 1);
-        });
+            if (dragging && Math.abs(dragX) > 40) {
+                ignoreClick = true;
+                goTo(dragX < 0 ? active + 1 : active - 1);
+                window.setTimeout(() => {
+                    ignoreClick = false;
+                }, 80);
+            } else {
+                layout();
+            }
+            dragging = false;
+            dragX = 0;
+        };
 
-        viewport.addEventListener('pointercancel', () => {
-            pointerDown = false;
-            viewport.classList.remove('is-dragging');
+        viewport.addEventListener('pointerup', endDrag);
+        viewport.addEventListener('pointercancel', endDrag);
+        viewport.addEventListener('pointerleave', () => {
+            if (pointerDown) endDrag();
         });
 
         viewport.addEventListener('wheel', (e) => {
@@ -213,15 +202,16 @@
         }, { passive: false });
 
         if (typeof ResizeObserver !== 'undefined') {
-            new ResizeObserver(layout).observe(viewport);
+            new ResizeObserver(() => layout(0, true)).observe(viewport);
         } else {
-            window.addEventListener('resize', layout);
+            window.addEventListener('resize', () => layout(0, true));
         }
 
         root.classList.add('is-ready');
-        layout();
+        layout(0, true);
         setInfo(active);
         updateDots();
+        syncNav();
     }
 
     window.initProductShowcase = initProductShowcase;
