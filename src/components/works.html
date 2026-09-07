@@ -5,11 +5,11 @@
             <h2 class="section-title">Featured works</h2>
             <p class="section-intro">A collection of products, sites, and studies that show how I think in interface, motion, and front-end craft.</p>
         </header>
-        <div class="works-filters" data-reveal>
-            <button class="filter-chip is-active" data-filter="all">All</button>
-            <button class="filter-chip" data-filter="web">Web</button>
-            <button class="filter-chip" data-filter="ui">UI/UX</button>
-            <button class="filter-chip" data-filter="mobile">Mobile</button>
+        <div class="works-filters" data-reveal role="tablist" aria-label="Filter projects by type">
+            <button class="filter-chip is-active" type="button" role="tab" aria-selected="true" data-filter="all">All</button>
+            <button class="filter-chip" type="button" role="tab" aria-selected="false" data-filter="web">Web</button>
+            <button class="filter-chip" type="button" role="tab" aria-selected="false" data-filter="ui">UI/UX</button>
+            <button class="filter-chip" type="button" role="tab" aria-selected="false" data-filter="mobile">Mobile</button>
         </div>
         <div class="works-stack" id="worksGrid"></div>
     </div>

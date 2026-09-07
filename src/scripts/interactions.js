@@ -2,12 +2,20 @@
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const finePointer = window.matchMedia('(pointer: fine)').matches;
 
+    let pageReady = false;
+    let writeDone = false;
+
     function hidePreloader() {
         const preloader = document.getElementById('preloader');
         document.body.classList.add('is-ready');
         if (!preloader) return;
+        window.__preloaderNameWrite?.destroy?.();
         preloader.classList.add('is-done');
         setTimeout(() => preloader.remove(), 700);
+    }
+
+    function maybeHidePreloader() {
+        if (pageReady && writeDone) hidePreloader();
     }
 
     function initCursor() {
@@ -160,7 +168,8 @@
     }
 
     function boot() {
-        hidePreloader();
+        pageReady = true;
+        maybeHidePreloader();
         initCursor();
         initSpotlight();
         initProgress();
@@ -171,6 +180,17 @@
         if (window.ScrollTrigger) ScrollTrigger.refresh();
     }
 
+    document.addEventListener('preloader:written', () => {
+        writeDone = true;
+        maybeHidePreloader();
+    });
+    if (window.__preloaderWriteDone) writeDone = true;
+
     document.addEventListener('portfolio:ready', boot);
-    window.addEventListener('load', () => setTimeout(hidePreloader, 700));
+    window.addEventListener('load', () => {
+        window.setTimeout(() => {
+            writeDone = true;
+            maybeHidePreloader();
+        }, 8000);
+    });
 })();

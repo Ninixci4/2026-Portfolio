@@ -1,24 +1,51 @@
 .works-filters {
     display: flex;
     justify-content: center;
-    gap: 0.6rem;
-    flex-wrap: wrap;
-    margin-bottom: 1.5rem;
+    width: max-content;
+    max-width: 100%;
+    margin: 0 auto 1.8rem;
+    padding: 0.28rem;
+    gap: 0.12rem;
+    flex-wrap: nowrap;
+    border-radius: 999px;
+    background: var(--glass);
+    border: 1px solid var(--line);
+    box-shadow: var(--shadow);
+    backdrop-filter: blur(22px) saturate(1.4);
 }
 
-.filter-chip {
-    border: 1px solid var(--line);
-    background: var(--glass);
-    color: var(--text);
+.works-filters .filter-chip {
+    flex: 1 1 auto;
+    justify-content: center;
+    border: 0;
+    background: transparent;
+    color: var(--muted);
     cursor: none;
     position: relative;
     overflow: hidden;
+    border-radius: 999px;
+    padding: 0.55rem 1.2rem;
+    font-family: var(--label);
+    font-size: 0.98rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    line-height: 1.2;
+    text-transform: uppercase;
+    box-shadow: none;
+    transform: none;
+    transition: color 0.25s ease, background 0.25s ease, box-shadow 0.25s ease;
 }
 
-.filter-chip.is-active {
+.works-filters .filter-chip:hover {
+    color: var(--text);
+    transform: none;
+}
+
+.works-filters .filter-chip.is-active {
     background: linear-gradient(135deg, var(--c3), var(--c4));
     color: #fff;
     border-color: transparent;
+    box-shadow: 0 8px 18px rgba(80, 31, 91, 0.22);
 }
 
 .works-stack {
@@ -317,6 +344,21 @@
 }
 
 @media (max-width: 980px) {
+    .works-filters {
+        width: 100%;
+        margin-bottom: 1.35rem;
+        padding: 0.22rem;
+        overflow: hidden;
+    }
+
+    .works-filters .filter-chip {
+        cursor: pointer;
+        padding: 0.5rem 0.72rem;
+        font-size: 0.88rem;
+        letter-spacing: 0.06em;
+        white-space: nowrap;
+    }
+
     .work-card {
         grid-template-columns: 1fr;
         min-height: auto;

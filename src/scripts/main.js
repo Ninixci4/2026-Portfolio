@@ -349,8 +349,12 @@
         const chips = document.querySelectorAll('.filter-chip');
         chips.forEach((chip) => {
             chip.addEventListener('click', () => {
-                chips.forEach((c) => c.classList.remove('is-active'));
+                chips.forEach((c) => {
+                    c.classList.remove('is-active');
+                    c.setAttribute('aria-selected', 'false');
+                });
                 chip.classList.add('is-active');
+                chip.setAttribute('aria-selected', 'true');
                 const filter = chip.dataset.filter;
                 document.querySelectorAll('.work-card').forEach((card) => {
                     const show = filter === 'all' || card.dataset.category === filter;
@@ -380,6 +384,18 @@
             >
                 <div class="product-showcase__card">
                     <img src="${cert.certificateImage}" alt="${cert.title.replace(/"/g, '&quot;')}" loading="lazy" draggable="false">
+                    <span class="product-showcase__flare" aria-hidden="true">
+                        <span class="product-showcase__flare-haze"></span>
+                        <span class="product-showcase__flare-bloom"></span>
+                        <span class="product-showcase__flare-beam"></span>
+                        <span class="product-showcase__flare-star">
+                            <span class="product-showcase__flare-ray product-showcase__flare-ray--h"></span>
+                            <span class="product-showcase__flare-ray product-showcase__flare-ray--v"></span>
+                            <span class="product-showcase__flare-ray product-showcase__flare-ray--d1"></span>
+                            <span class="product-showcase__flare-ray product-showcase__flare-ray--d2"></span>
+                            <span class="product-showcase__flare-core"></span>
+                        </span>
+                    </span>
                 </div>
             </article>
         `).join('');

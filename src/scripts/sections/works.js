@@ -4,8 +4,12 @@
         if (!chips.length) return;
         chips.forEach((chip) => {
             chip.addEventListener('click', () => {
-                chips.forEach((c) => c.classList.remove('is-active'));
+                chips.forEach((c) => {
+                    c.classList.remove('is-active');
+                    c.setAttribute('aria-selected', 'false');
+                });
                 chip.classList.add('is-active');
+                chip.setAttribute('aria-selected', 'true');
                 const filter = chip.dataset.filter;
                 document.querySelectorAll('#works .work-card').forEach((card) => {
                     card.classList.toggle('is-hidden', !(filter === 'all' || card.dataset.category === filter));

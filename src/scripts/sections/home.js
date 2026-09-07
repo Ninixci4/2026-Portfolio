@@ -188,9 +188,15 @@
         window.addEventListener('resize', fill);
     }
 
+    function initNameWrite() {
+        if (!window.NiciaName) return;
+        window.NiciaName.write('homeName', { startWhenReady: true, replayOnHomeClick: true });
+    }
+
     function bootHome() {
         initInstax();
         initMarquee();
+        initNameWrite();
     }
 
     if (document.readyState === 'loading') {

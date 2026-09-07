@@ -91,6 +91,26 @@ window.PORTFOLIO_PROJECTS = [
         liveSite: '#'
     },
     {
+        id: 12,
+        title: 'InnovaZync Tech',
+        description: 'A company website for InnovaZync Tech, a new tech venture alongside BidaBoss Inc. It was designed as a glass-and-glow marketing site for web, systems, and mobile services — about, services, featured work, pricing, and contact. The company was discontinued, so the live site stayed as an early build and never received the full content update.',
+        type: 'Website',
+        kind: 'Professional Project',
+        category: 'web',
+        status: 'Discontinued',
+        image: 'assets/img/innovazync_cover.png',
+        gallery: [
+            'assets/img/innovazync_1.png',
+            'assets/img/innovazync_2.png',
+            'assets/img/innovazync_3.png',
+            'assets/img/innovazync_4.png',
+            'assets/img/innovazync_5.png'
+        ],
+        techStack: ['Next.js', 'React', 'JavaScript', 'CSS'],
+        keywords: ['Tech', 'Company site', 'Branding'],
+        liveSite: 'https://innova-zync.vercel.app/'
+    },
+    {
         id: 11,
         title: 'MetroRest Condotel',
         description: 'A UI/UX mockup for MetroRest Condotel — a luxury hospitality brand. The Figma file covers the marketing landing experience plus role-based dashboards for SuperAdmin, unit owners, and housekeepers, with a shared design system for color, type, and layout.',
