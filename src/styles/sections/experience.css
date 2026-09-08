@@ -11,7 +11,7 @@
     color: var(--text);
     border-radius: 999px;
     padding: 0.7rem 1.2rem;
-    cursor: none;
+    cursor: pointer;
     transition: transform 0.3s var(--ease), box-shadow 0.3s ease, background 0.3s ease, color 0.3s ease;
 }
 

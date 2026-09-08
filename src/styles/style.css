@@ -76,10 +76,17 @@ body {
     transition: background 0.45s ease, color 0.45s ease;
 }
 
-body.is-ready { cursor: none; }
+body.is-ready { cursor: auto; }
+
+html.is-3d-grab,
+html.is-3d-grab * { cursor: grab !important; }
+html.is-3d-grabbing,
+html.is-3d-grabbing * { cursor: grabbing !important; }
+html.is-3d-pointer,
+html.is-3d-pointer * { cursor: pointer !important; }
 
 img { max-width: 100%; display: block; }
-a { color: inherit; }
+a { color: inherit; cursor: pointer; }
 button, input, textarea { font-family: inherit; }
 
 .skip-link {
@@ -354,42 +361,42 @@ button, input, textarea { font-family: inherit; }
     inset: 0 auto auto 0;
     z-index: 10000;
     pointer-events: none;
-    mix-blend-mode: difference;
 }
 
-.cursor-dot,
+.cursor-dot {
+    display: none;
+}
+
 .cursor-ring,
 .cursor-label {
     position: absolute;
     translate: -50% -50%;
 }
 
-.cursor-dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: #fff;
-}
-
 .cursor-ring {
     width: 42px;
     height: 42px;
-    border: 1px solid rgba(255, 255, 255, 0.8);
     border-radius: 50%;
-    transition: width 0.25s var(--ease), height 0.25s var(--ease), background 0.25s ease;
+    background: radial-gradient(circle, rgba(249, 203, 223, 0.55), rgba(184, 154, 201, 0.18) 46%, transparent 72%);
+    box-shadow: 0 0 22px rgba(249, 203, 223, 0.35);
+    transition: width 0.25s var(--ease), height 0.25s var(--ease), background 0.25s ease, box-shadow 0.25s ease;
 }
 
 .cursor.is-hover .cursor-ring {
     width: 84px;
     height: 84px;
-    background: rgba(249, 203, 223, 0.16);
+    background: radial-gradient(circle, rgba(249, 203, 223, 0.42), rgba(121, 76, 158, 0.16) 48%, transparent 72%);
+    box-shadow: 0 0 28px rgba(249, 203, 223, 0.28);
 }
 
 .cursor-label {
     font-size: 0.68rem;
     letter-spacing: 0.16em;
     text-transform: uppercase;
-    color: #fff;
+    color: var(--c2);
+    background: color-mix(in srgb, var(--c6) 88%, #fff);
+    padding: 0.18rem 0.55rem;
+    border-radius: 999px;
     opacity: 0;
 }
 
@@ -534,7 +541,7 @@ button, input, textarea { font-family: inherit; }
     border-radius: 50%;
     background: linear-gradient(135deg, var(--c3), var(--c4));
     color: #fff;
-    cursor: none;
+    cursor: pointer;
     transition: transform 0.3s var(--ease), box-shadow 0.3s ease;
 }
 
@@ -610,7 +617,7 @@ button, input, textarea { font-family: inherit; }
     text-decoration: none;
     border: 0;
     font-weight: 650;
-    cursor: none;
+    cursor: pointer;
     position: relative;
     overflow: hidden;
     transition: transform 0.3s var(--ease), box-shadow 0.3s ease;
@@ -1037,7 +1044,8 @@ button, input, textarea { font-family: inherit; }
 .cursor.is-hover .cursor-ring {
     width: 84px;
     height: 84px;
-    background: rgba(249, 203, 223, 0.16);
+    background: radial-gradient(circle, rgba(249, 203, 223, 0.42), rgba(121, 76, 158, 0.16) 48%, transparent 72%);
+    box-shadow: 0 0 28px rgba(249, 203, 223, 0.28);
 }
 .cursor.is-hover .cursor-label { opacity: 1; }
 .project-modal.is-open,

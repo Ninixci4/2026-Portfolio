@@ -20,7 +20,7 @@
     border: 0;
     background: transparent;
     color: var(--muted);
-    cursor: none;
+    cursor: pointer;
     position: relative;
     overflow: hidden;
     border-radius: 999px;
@@ -66,7 +66,7 @@
     background: var(--elev);
     border: 1px solid var(--line);
     box-shadow: var(--shadow);
-    cursor: none;
+    cursor: pointer;
     isolation: isolate;
 }
 

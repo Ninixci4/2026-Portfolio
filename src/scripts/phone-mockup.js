@@ -37,6 +37,14 @@
         `;
     }
 
+    function setSceneCursor(kind) {
+        const html = document.documentElement;
+        html.classList.remove('is-3d-grab', 'is-3d-grabbing', 'is-3d-pointer');
+        if (kind) html.classList.add(`is-3d-${kind}`);
+    }
+
+    window.setSceneCursor = setSceneCursor;
+
     function bindPhone(stage) {
         const rig = stage.querySelector('.phone-rig');
         if (!rig) return;
@@ -50,7 +58,6 @@
         let startY = 0;
         let moved = false;
         let idle = 0;
-        let tapOnPhone = false;
 
         function render() {
             rotX += (targetX - rotX) * 0.16;
@@ -63,14 +70,21 @@
             requestAnimationFrame(render);
         }
 
+        stage.addEventListener('pointerenter', () => {
+            if (!dragging) setSceneCursor('grab');
+        });
+        stage.addEventListener('pointerleave', () => {
+            if (!dragging) setSceneCursor('');
+        });
+
         stage.addEventListener('pointerdown', (e) => {
             if (e.button && e.button !== 0) return;
             e.preventDefault();
             dragging = true;
             moved = false;
-            tapOnPhone = Boolean(e.target.closest('.phone, .phone-screen, .phone-slides, .phone-rig'));
             startX = e.clientX;
             startY = e.clientY;
+            setSceneCursor('grabbing');
             stage.setPointerCapture?.(e.pointerId);
         });
 
@@ -88,8 +102,10 @@
             dragging = false;
             targetX = 8;
             targetY = -24;
-            const shouldPreview = !moved && tapOnPhone && e?.type === 'pointerup';
-            tapOnPhone = false;
+            if (e?.pointerId != null) stage.releasePointerCapture?.(e.pointerId);
+            const hovering = stage.matches(':hover');
+            setSceneCursor(hovering ? 'grab' : '');
+            const shouldPreview = !moved && e?.type === 'pointerup';
             if (shouldPreview) {
                 const media = slides[shot] || stage.querySelector('.phone-slides .is-active') || stage.querySelector('.phone-slides img, .phone-slides video');
                 openPreview(media, {
@@ -416,6 +432,7 @@
         renderPreviewSlide();
         box.classList.add('is-open');
         document.body.classList.add('preview-open');
+        setSceneCursor('');
     }
 
     function closePreview() {
@@ -425,6 +442,7 @@
         if (video) video.pause();
         box.classList.remove('is-open', 'has-gallery', 'is-video-preview', 'is-image-zoomed');
         document.body.classList.remove('preview-open');
+        setSceneCursor('');
         box.querySelector('.phone-preview-frame')?.replaceChildren();
         box.querySelector('.phone-preview-dots')?.replaceChildren();
         const counter = box.querySelector('.phone-preview-counter');

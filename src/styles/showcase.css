@@ -117,6 +117,7 @@
     height: min(62vh, 560px);
     perspective: 1800px;
     perspective-origin: 50% 48%;
+    cursor: pointer;
 }
 
 .flip-track {
@@ -138,7 +139,12 @@
     will-change: transform, filter, opacity;
 }
 
-.flip-card.is-focus { pointer-events: auto; }
+.flip-card.is-focus {
+    pointer-events: auto;
+    cursor: pointer;
+}
+
+.flip-card.is-focus * { cursor: pointer; }
 
 .flip-inner {
     width: 100%;

@@ -22,28 +22,14 @@
         if (!finePointer || reduce) return;
         const cursor = document.getElementById('cursor');
         if (!cursor) return;
-        const dot = cursor.querySelector('.cursor-dot');
         const ring = cursor.querySelector('.cursor-ring');
         const label = cursor.querySelector('.cursor-label');
-        let x = 0;
-        let y = 0;
-        let rx = 0;
-        let ry = 0;
 
         window.addEventListener('mousemove', (e) => {
-            x = e.clientX;
-            y = e.clientY;
-            dot.style.transform = `translate(${x}px, ${y}px)`;
+            const pos = `translate(${e.clientX}px, ${e.clientY}px)`;
+            ring.style.transform = pos;
+            label.style.transform = pos;
         });
-
-        function loop() {
-            rx += (x - rx) * 0.18;
-            ry += (y - ry) * 0.18;
-            ring.style.transform = `translate(${rx}px, ${ry}px)`;
-            label.style.transform = `translate(${rx}px, ${ry}px)`;
-            requestAnimationFrame(loop);
-        }
-        loop();
 
         document.querySelectorAll('a, button, .work-card, .certification-card, .magnetic').forEach((el) => {
             el.addEventListener('mouseenter', () => {
@@ -187,6 +173,10 @@
     if (window.__preloaderWriteDone) writeDone = true;
 
     document.addEventListener('portfolio:ready', boot);
+    if (!document.getElementById('preloader')) {
+        initCursor();
+        initSpotlight();
+    }
     window.addEventListener('load', () => {
         window.setTimeout(() => {
             writeDone = true;

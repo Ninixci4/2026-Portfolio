@@ -166,6 +166,14 @@
         });
     });
 
+    const flipStage = document.querySelector('.flip-stage');
+    const onFlipEnter = () => window.setSceneCursor?.('pointer');
+    const onFlipLeave = () => window.setSceneCursor?.('');
+    flipStage?.addEventListener('pointerenter', onFlipEnter);
+    flipStage?.addEventListener('mouseenter', onFlipEnter);
+    flipStage?.addEventListener('pointerleave', onFlipLeave);
+    flipStage?.addEventListener('mouseleave', onFlipLeave);
+
     const html = document.documentElement;
     const themeToggle = document.getElementById('themeToggle');
     const theme = localStorage.getItem('theme') || 'dark';
